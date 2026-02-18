@@ -9,11 +9,13 @@ public class ProjectileController : MonoBehaviour
     public float speed = 10f;
     public float ExtraRotation = 0f;
     public float lifeTime = 5f;
+    public AudioSource SpawnSound;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
 
+        rb = GetComponent<Rigidbody2D>();
+        SpawnSound.Play();
         Vector3 mousePos = Input.mousePosition;
 
 

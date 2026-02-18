@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     float input;
     public bool moving = false;
     public float angle;
+    public AudioSource Salto;
 
     //Ataque a distancia
     public GameObject bullet;
@@ -24,8 +25,19 @@ public class PlayerController : MonoBehaviour
 
     //Ataque cuerpo a cuerpo
     public bool Atacking = false;
-    
+    public GameObject MeleeAttackRangeDown;
     public GameObject MeleeAttackRange;
+    public GameObject MeleeAttackRangeCharged;
+    public float CargeTime = 1.5f;
+
+    //Pogo
+    public bool HitPogo = false;
+    public float FuerzaPogo = 10f;
+
+    //Dash
+    public float FuerzaDash = 10f;
+    bool Dashing;
+    public float TiempoDash = 0.5f;
 
 
     void Start()
@@ -61,7 +73,7 @@ public class PlayerController : MonoBehaviour
         arm.transform.rotation = Quaternion.Euler(0, 0, angle);
 
 
-        if (Input.GetMouseButtonDown(1) && moving== false)
+        if (Input.GetMouseButtonDown(1) && moving== false && Dashing == false && Atacking == false)
         {
             Aiming = true;
             arm.gameObject.SetActive(true);
@@ -101,6 +113,7 @@ public class PlayerController : MonoBehaviour
             //saltar
             if (Input.GetKeyDown(KeyCode.Space) && IsGrounded == true)
             {
+                AudioSource.PlayClipAtPoint(Salto.clip, transform.position);
                 rb.AddForce(new Vector2(0, jumpforce), ForceMode2D.Impulse);
             }
 
@@ -113,7 +126,7 @@ public class PlayerController : MonoBehaviour
         }
         #endregion;
         #region Disparo
-        if (Input.GetMouseButtonDown(0) && Aiming == true && GameObject.FindGameObjectWithTag("Proyectil") == false)
+        if (Input.GetMouseButtonDown(0) && Aiming == true && GameObject.FindGameObjectWithTag("Proyectil") == false && Atacking==false)
         {
             Instantiate(bullet, firePoint.transform.position, firePoint.transform.rotation);
         }
@@ -121,29 +134,92 @@ public class PlayerController : MonoBehaviour
         #region Ataque cuerpo a cuerpo
 
         //Ataque Lateral
-        if (Input.GetMouseButtonDown(0) && Aiming == false && GameObject.FindGameObjectWithTag("Ataque")==false)
+        if (Input.GetMouseButton(0) && Aiming == false && GameObject.FindGameObjectWithTag("Ataque")==false && Dashing== false && !Input.GetKey(KeyCode.S))
         {
+            Atacking = true;
+            CargeTime -= 1 * Time.deltaTime;
+            if (CargeTime <= 0)
+            {
+                rb.transform.localScale = new Vector3(1.5F, 1.5F, 1.5F);
+            }
+
+
+        }
+        else if (Input.GetMouseButtonUp(0) && CargeTime > 0 && !Input.GetKey(KeyCode.S) && Aiming == false && Dashing == false && GameObject.FindGameObjectWithTag("Ataque") == false)
+        {
+            CargeTime = 1.5f;
             Atacking = true;
             MeleeAttackRange.gameObject.SetActive(true);
             Invoke("cesaAtaque", 0.2f);
+
         }
 
+        //Ataque Cargado
+        else if (Input.GetMouseButtonUp(0) && CargeTime <= 0 && Aiming == false && !Input.GetKey(KeyCode.S) && Dashing == false && GameObject.FindGameObjectWithTag("Ataque") == false)
+        {
+            CargeTime = 1.5f;
+            Atacking = true;
+            MeleeAttackRangeCharged.gameObject.SetActive(true);
+            Invoke("cesaAtaque", 0.5f);
+        }
+
+
+
         //Ataque Hacia Abajo
+        if (Input.GetKey(KeyCode.S) && Aiming == false && GameObject.FindGameObjectWithTag("Ataque") == false && Dashing == false && IsGrounded == false)
+        {
+            if (Input.GetMouseButtonUp(0))
+            {
+                Atacking = true;
+                MeleeAttackRangeDown.gameObject.SetActive(true);
+                Invoke("cesaAtaque", 0.2f);
+
+               
+            }
+            else if (HitPogo == true)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, 0, 0);
+                rb.AddForce(new Vector2(0, FuerzaPogo), ForceMode2D.Impulse);
+                HitPogo = false;
+            }
+
+        }
 
         #endregion
+        #region Dash
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && Dashing == false)
+        {
+            Dashing = true;
+
+            rb.AddForce(transform.right * FuerzaDash, ForceMode2D.Impulse);
+
+            StartCoroutine(FinDashCrt());
+
+        }
+        #endregion
+    }
+    
+    
+    IEnumerator FinDashCrt()
+    {
+        yield return new WaitForSeconds(TiempoDash);
+        Dashing = false;
     }
 
+    
+    
     private void FixedUpdate()
     {
-        if (Aiming == false)
+        if (Aiming == false && Dashing == false)
         {
             
             //modificador de velocidad en el eje X y dejarla igual en el eje Y
             rb.velocity = new Vector2(input * Movespeed, rb.velocity.y);
         }
-        else
+        else if (Dashing == false)
         {
-                       moving = false;
+             moving = false;
              rb.velocity = new Vector2(0, rb.velocity.y);
         }
         
@@ -180,6 +256,9 @@ public class PlayerController : MonoBehaviour
     {
         Atacking = false;
         MeleeAttackRange.gameObject.SetActive(false);
+        MeleeAttackRangeDown.gameObject.SetActive(false);
+        MeleeAttackRangeCharged.gameObject.SetActive(false);
+        rb.transform.localScale = new Vector3(1, 1, 1);
     }
 
     //Hace visible el área de comprobación del suelo en la escena para facilitar su ajuste
