@@ -30,10 +30,7 @@ public class PlayerController : MonoBehaviour
     public GameObject MeleeAttackRangeCharged;
     public float CargeTime = 1.5f;
 
-    //Pogo
-    public bool HitPogo = false;
-    public float FuerzaPogo = 10f;
-
+    
     //Dash
     public float FuerzaDash = 10f;
     bool Dashing;
@@ -176,12 +173,7 @@ public class PlayerController : MonoBehaviour
 
                
             }
-            else if (HitPogo == true)
-            {
-                rb.velocity = new Vector3(rb.velocity.x, 0, 0);
-                rb.AddForce(new Vector2(0, FuerzaPogo), ForceMode2D.Impulse);
-                HitPogo = false;
-            }
+            
 
         }
 
