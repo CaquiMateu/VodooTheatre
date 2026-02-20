@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour
             CargeTime -= 1 * Time.deltaTime;
             if (CargeTime <= 0)
             {
-                rb.transform.localScale = new Vector3(1.5F, 1.5F, 1.5F);
+                rb.transform.localScale = new Vector3(0.1538F, 0.1538F, 0.1538F);
             }
 
 
@@ -249,7 +249,7 @@ public class PlayerController : MonoBehaviour
         MeleeAttackRange.gameObject.SetActive(false);
         MeleeAttackRangeDown.gameObject.SetActive(false);
         MeleeAttackRangeCharged.gameObject.SetActive(false);
-        rb.transform.localScale = new Vector3(1, 1, 1);
+        rb.transform.localScale = new Vector3(0.1338f, 0.1338f, 0.1338f);
     }
 
     //Hace visible el área de comprobación del suelo en la escena para facilitar su ajuste
