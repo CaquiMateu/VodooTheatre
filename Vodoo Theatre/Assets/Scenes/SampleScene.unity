@@ -791,9 +791,13 @@ MonoBehaviour:
   RbPlayer: {fileID: 2039336507}
   speed: 1.13
   "zonaDetecci\xF3n": {fileID: 1093903869}
+  PlayerInAtackZone: 0
   moving: 0
   Posx: 0
   Posy: 0
+  distancia: 0
+  TiempoEntreAcciones: 1
+  "acci\xF3n": 0
 --- !u!212 &1153509431
 SpriteRenderer:
   m_ObjectHideFlags: 0

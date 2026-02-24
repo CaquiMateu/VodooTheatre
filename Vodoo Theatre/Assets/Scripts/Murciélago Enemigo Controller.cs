@@ -11,10 +11,13 @@ public class MurciélagoEnemigoController : MonoBehaviour
     public float speed = 5f;
     Vector2 dirección;
     public GameObject zonaDetección;
-    bool PlayerInAtackZone= false;
+    public bool PlayerInAtackZone;
     public bool moving;
     public float Posx;
     public float Posy;
+    public float distancia;
+    public float TiempoEntreAcciones = 5f;
+    public int acción;
     void Start()
     {
         rb= GetComponent<Rigidbody2D>();
@@ -23,24 +26,71 @@ public class MurciélagoEnemigoController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        distancia = Vector2.Distance(dirección, rb.position);
+
         if (!PlayerInAtackZone && moving == false)
         {
             moving = true;
-             Posx = Random.Range(-15, 15);
-             Posy = Random.Range(0, 1.5F);
+            Posx = Random.Range(-15, 15);
+            Posy = Random.Range(0, 1.5F);
 
-            dirección = new Vector2(Posx,Posy);
+            dirección = new Vector2(Posx, Posy);
 
-            rb.velocity = (dirección - rb.position) * speed ;  
+            rb.velocity = (dirección - rb.position) * speed;
+
         }
-        else if (dirección == rb.position)
+
+        else if (distancia < 1)
         {
-            rb.velocity = new Vector2(0,0);
+            rb.velocity = new Vector2(0, 0);
+            StartCoroutine(ActionTimeCRT());
+
+        }
+
+       
+
+        if (PlayerInAtackZone)
+        {
+            acción = Random.Range(1, 3);
+
+            switch (acción)
+            {
+                case 0: //Primera Opción, se mueve.
+
+                    moving = true;
+                    Posx = Random.Range(-15, 15);
+                    Posy = Random.Range(0, 1.5F);
+
+                    dirección = new Vector2(Posx, Posy);
+
+                    rb.velocity = (dirección - rb.position) * speed;
+                    if (distancia < 1)
+                    {
+                        rb.velocity = new Vector2(0, 0);
+                        StartCoroutine(ActionTimeCRT());
+
+                    }
+
+                    break;
+                
+                case 1: //Segunda opción se queda quieto
+
+                break;
+
+
+
+
+            }
+
+        }
+
+        IEnumerator ActionTimeCRT()
+        {
+            yield return new WaitForSeconds(TiempoEntreAcciones);
             moving = false;
         }
-       
-        
     }
+  
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -50,14 +100,8 @@ public class MurciélagoEnemigoController : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player") == false)
-        {
-
-            PlayerInAtackZone = false;
-        }
-    }
+    
+    
 }
 
 
