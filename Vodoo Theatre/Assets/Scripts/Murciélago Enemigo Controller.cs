@@ -18,6 +18,7 @@ public class MurciélagoEnemigoController : MonoBehaviour
     public float distancia;
     public float TiempoEntreAcciones = 5f;
     public int acción;
+    public bool Haciendoacción= false;
     void Start()
     {
         rb= GetComponent<Rigidbody2D>();
@@ -49,9 +50,10 @@ public class MurciélagoEnemigoController : MonoBehaviour
 
        
 
-        if (PlayerInAtackZone)
+        if (PlayerInAtackZone && Haciendoacción == false)
         {
-            acción = Random.Range(1, 3);
+            Haciendoacción = true;
+            acción = Random.Range(0,2);
 
             switch (acción)
             {
@@ -68,6 +70,7 @@ public class MurciélagoEnemigoController : MonoBehaviour
                     {
                         rb.velocity = new Vector2(0, 0);
                         StartCoroutine(ActionTimeCRT());
+                        Haciendoacción = false;
 
                     }
 
@@ -75,6 +78,8 @@ public class MurciélagoEnemigoController : MonoBehaviour
                 
                 case 1: //Segunda opción se queda quieto
 
+                    rb.velocity = Vector2.zero;
+                   
                 break;
 
 
@@ -82,12 +87,19 @@ public class MurciélagoEnemigoController : MonoBehaviour
 
             }
 
+            StartCoroutine(WaitingTimeBetweenAction());
+
         }
 
         IEnumerator ActionTimeCRT()
         {
             yield return new WaitForSeconds(TiempoEntreAcciones);
             moving = false;
+        }
+        IEnumerator WaitingTimeBetweenAction()
+        {
+            yield return new WaitForSeconds(1.5f);
+            Haciendoacción = false;
         }
     }
   
