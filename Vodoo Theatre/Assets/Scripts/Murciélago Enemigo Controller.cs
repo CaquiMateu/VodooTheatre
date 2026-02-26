@@ -22,6 +22,8 @@ public class MurciélagoEnemigoController : MonoBehaviour
     void Start()
     {
         rb= GetComponent<Rigidbody2D>();
+        GameObject Player = GameObject.FindWithTag("Player");
+        RbPlayer = Player.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame

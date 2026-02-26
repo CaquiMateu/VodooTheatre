@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Profiling.Memory.Experimental;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public bool moving = false;
     public float angle;
     public AudioSource Salto;
+    Vector3 TamañoBase;
 
     //Ataque a distancia
     public GameObject bullet;
@@ -39,6 +42,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        TamañoBase = transform.localScale;
+
     }
 
 
@@ -136,7 +141,7 @@ public class PlayerController : MonoBehaviour
             CargeTime -= 1 * Time.deltaTime;
             if (CargeTime <= 0)
             {
-                rb.transform.localScale = new Vector3(0.1538F, 0.1538F, 0.1538F);
+                rb.transform.localScale = TamañoBase + new Vector3(0.05f, 0.05f, 0);
                 
             }
 
@@ -190,9 +195,10 @@ public class PlayerController : MonoBehaviour
 
         }
         #endregion
+     
     }
-    
-    
+
+
     IEnumerator FinDashCrt()
     {
         yield return new WaitForSeconds(TiempoDash);
@@ -229,6 +235,7 @@ public class PlayerController : MonoBehaviour
 
         {
             IsGrounded = true;
+            
         }
 
         else
@@ -255,7 +262,7 @@ public class PlayerController : MonoBehaviour
         MeleeAttackRange.gameObject.SetActive(false);
         MeleeAttackRangeDown.gameObject.SetActive(false);
         MeleeAttackRangeCharged.gameObject.SetActive(false);
-        rb.transform.localScale = new Vector3(0.1338f, 0.1338f, 0.1338f);
+        rb.transform.localScale = TamañoBase;
     }
 
     //Hace visible el área de comprobación del suelo en la escena para facilitar su ajuste
@@ -264,4 +271,6 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireCube(transform.position + GroundCheckPosition, GroundCheckSize);
     }
+
+   
 }
