@@ -5,13 +5,13 @@ using UnityEngine;
 public class DeadZone : MonoBehaviour
 {
 
-    public PlayerController playercontroller;
+    public PlayerHealth playerhealth;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") == true)
         {
-            playercontroller.Respawn();
+            playerhealth.PerderVida(999999);
         }
     }
 }

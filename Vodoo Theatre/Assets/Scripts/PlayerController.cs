@@ -205,11 +205,6 @@ public class PlayerController : MonoBehaviour
         Dashing = false;
     }
 
-    public void Respawn()
-    {
-        GameObject respawn = GameObject.FindWithTag("Respawn");
-        transform.position = respawn.transform.position;
-    }
     
     
     private void FixedUpdate()
