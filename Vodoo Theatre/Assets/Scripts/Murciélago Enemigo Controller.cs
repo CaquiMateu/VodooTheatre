@@ -19,8 +19,14 @@ public class MurciélagoEnemigoController : MonoBehaviour
     public float TiempoEntreAcciones = 5f;
     public int acción;
     public bool Haciendoacción= false;
+    public int Daño = 1;
+    public int VidaEnemigo = 25;
+
+    private PlayerHealth PlayerHealth;
+    private ProjectileController ProjectilDaño;
     void Start()
     {
+
         rb= GetComponent<Rigidbody2D>();
         GameObject Player = GameObject.FindWithTag("Player");
         RbPlayer = Player.GetComponent<Rigidbody2D>();
@@ -114,8 +120,33 @@ public class MurciélagoEnemigoController : MonoBehaviour
         }
     }
 
-    
-    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Proyectil"))
+        {
+            if (ProjectilDaño == null)
+            {
+                ProjectilDaño = collision.collider.GetComponent<ProjectileController>();
+            }
+
+            VidaEnemigo -= ProjectilDaño.DañoBala;
+
+            if (VidaEnemigo <= 0)
+            {
+                Destroy(this.gameObject);
+            }
+        }
+        if (collision.collider.CompareTag("Player"))
+        {
+            if (PlayerHealth == null)
+            {
+                PlayerHealth = collision.collider.GetComponent<PlayerHealth>();
+            }
+
+            PlayerHealth.PerderVida(Daño);
+        }
+    }
+
 }
 
 

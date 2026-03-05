@@ -10,6 +10,7 @@ public class ProjectileController : MonoBehaviour
     public float ExtraRotation = 0f;
     public float lifeTime = 5f;
     public AudioSource SpawnSound;
+    public int DañoBala = 25;
 
     void Start()
     {

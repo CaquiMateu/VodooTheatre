@@ -13,14 +13,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = MaxHealth;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            PerderVida(1);
-        }
-    }
+   
 
     public void PerderVida(int Damage)
     {
@@ -44,5 +37,7 @@ public class PlayerHealth : MonoBehaviour
         GameObject respawn = GameObject.FindWithTag("Respawn");
         transform.position = respawn.transform.position;
     }
+
+
 
 }

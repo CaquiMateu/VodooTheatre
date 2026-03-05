@@ -179,6 +179,7 @@ MonoBehaviour:
   ExtraRotation: 30.5
   lifeTime: 3
   SpawnSound: {fileID: -4705660625309929031}
+  "Da\xF1oBala": 10
 --- !u!82 &-4705660625309929031
 AudioSource:
   m_ObjectHideFlags: 0
