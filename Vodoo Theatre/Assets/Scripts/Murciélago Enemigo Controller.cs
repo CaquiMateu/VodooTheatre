@@ -20,10 +20,10 @@ public class MurciélagoEnemigoController : MonoBehaviour
     public int acción;
     public bool Haciendoacción= false;
     public int Daño = 1;
-    public int VidaEnemigo = 25;
+    
 
     private PlayerHealth PlayerHealth;
-    private ProjectileController ProjectilDaño;
+   
     void Start()
     {
 
@@ -122,20 +122,7 @@ public class MurciélagoEnemigoController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Proyectil"))
-        {
-            if (ProjectilDaño == null)
-            {
-                ProjectilDaño = collision.collider.GetComponent<ProjectileController>();
-            }
-
-            VidaEnemigo -= ProjectilDaño.DañoBala;
-
-            if (VidaEnemigo <= 0)
-            {
-                Destroy(this.gameObject);
-            }
-        }
+       
         if (collision.collider.CompareTag("Player"))
         {
             if (PlayerHealth == null)

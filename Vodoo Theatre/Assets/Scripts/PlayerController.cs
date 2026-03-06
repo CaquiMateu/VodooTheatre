@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     public GameObject MeleeAttackRange;
     public GameObject MeleeAttackRangeCharged;
     public float CargeTime = 1.5f;
+    public int DañoAtaque = 20;
+    public int DañoAtaqueCargado = 35;
 
     
     //Dash
