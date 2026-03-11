@@ -514,6 +514,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &469798423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 469798424}
+  m_Layer: 0
+  m_Name: Enemigo Volador 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &469798424
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469798423}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -30.95, y: 12.36, z: -0.14399597}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &483989024
 GameObject:
   m_ObjectHideFlags: 0
@@ -853,7 +884,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8.19
+  orthographic size: 9.03
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -878,7 +909,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.68, y: 3.2821999, z: -10}
+  m_LocalPosition: {x: 0.68, y: 3.601399, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1265,7 +1296,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  target: {fileID: 2039336509}
+  target: {fileID: 274768598}
 --- !u!114 &781723825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1397,7 +1428,7 @@ Transform:
   m_GameObject: {fileID: 781723823}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.0052125, y: 5.6716022, z: 0}
+  m_LocalPosition: {x: -34.52, y: 5.22, z: 0}
   m_LocalScale: {x: 1.72, y: 1.72, z: 1.72}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1468,6 +1499,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ce7fad7c87695a4c99b68251763ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  puntos:
+  - {fileID: 2015354335}
+  - {fileID: 469798424}
+  "\xCDndiceActual": 0
+  chasing: 0
 --- !u!4 &789721829 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2145721761894099243, guid: e6a3080894ba6dd4db76e00ec3e7fdd7, type: 3}
@@ -2051,7 +2087,7 @@ MonoBehaviour:
   m_Follow: {fileID: 2039336509}
   m_Lens:
     FieldOfView: 34
-    OrthographicSize: 8.19
+    OrthographicSize: 9.03
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -2077,7 +2113,7 @@ Transform:
   m_GameObject: {fileID: 1131553007}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.68, y: 3.2821999, z: -10}
+  m_LocalPosition: {x: 0.68, y: 3.601399, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3656,6 +3692,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6a3080894ba6dd4db76e00ec3e7fdd7, type: 3}
+--- !u!1 &2015354334
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2015354335}
+  m_Layer: 0
+  m_Name: Enemigo Volador 1 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2015354335
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015354334}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -46.46493, y: 13.455608, z: -0.14399597}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2039336504
 GameObject:
   m_ObjectHideFlags: 0
@@ -4672,3 +4739,5 @@ SceneRoots:
   - {fileID: 6655965214996733538}
   - {fileID: 1636733660}
   - {fileID: 253169916}
+  - {fileID: 469798424}
+  - {fileID: 2015354335}
