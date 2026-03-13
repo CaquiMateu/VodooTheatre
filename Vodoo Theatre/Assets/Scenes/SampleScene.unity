@@ -539,7 +539,7 @@ Transform:
   m_GameObject: {fileID: 469798423}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.95, y: 12.36, z: -0.14399597}
+  m_LocalPosition: {x: -30.95, y: 12.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1261,6 +1261,37 @@ Transform:
   - {fileID: 2124460989}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &733764690
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 733764691}
+  m_Layer: 0
+  m_Name: Enemigo Volador 1 (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &733764691
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733764690}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -37.09, y: 18.17, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &781723823
 GameObject:
   m_ObjectHideFlags: 0
@@ -1334,7 +1365,7 @@ MonoBehaviour:
   rotationSpeed: 360
   slowdownDistance: 1.17
   pickNextWaypointDist: 0.88
-  endReachedDistance: 0.7
+  endReachedDistance: 0
   alwaysDrawGizmos: 1
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
@@ -1500,10 +1531,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puntos:
-  - {fileID: 2015354335}
   - {fileID: 469798424}
+  - {fileID: 2015354335}
+  - {fileID: 733764691}
   "\xCDndiceActual": 0
   chasing: 0
+  attackDinstance: 2
+  BalaPrefab: {fileID: 1828367017769290038, guid: c705fa018e52b264985222d082fa3e94, type: 3}
+  RecargaBala: 1
 --- !u!4 &789721829 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2145721761894099243, guid: e6a3080894ba6dd4db76e00ec3e7fdd7, type: 3}
@@ -3717,7 +3752,7 @@ Transform:
   m_GameObject: {fileID: 2015354334}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -46.46493, y: 13.455608, z: -0.14399597}
+  m_LocalPosition: {x: -46.46493, y: 13.455608, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4741,3 +4776,4 @@ SceneRoots:
   - {fileID: 253169916}
   - {fileID: 469798424}
   - {fileID: 2015354335}
+  - {fileID: 733764691}
