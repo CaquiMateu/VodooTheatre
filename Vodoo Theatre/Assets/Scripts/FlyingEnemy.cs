@@ -16,6 +16,8 @@ public class FlyingEnemy : MonoBehaviour
     public GameObject BalaPrefab;
     public float RecargaBala = 1;
     public float VelocidadBala = 3;
+    public float Temporizador;
+    private float TiempoParaAtacar;
 
     private void Start()
     {
@@ -42,6 +44,13 @@ public class FlyingEnemy : MonoBehaviour
         else
         {
             transform.localScale = new Vector3 (-1,1,1);
+        }
+        if (chasing == true)
+        {
+            if (Time.time >= TiempoParaAtacar)
+            {
+                shoot();
+            }
         }
         
         if (Vector3.Distance(transform.position, puntos[ÍndiceActual].position) <= 0.1f && chasing==false)

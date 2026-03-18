@@ -909,7 +909,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.68, y: 3.601399, z: -10}
+  m_LocalPosition: {x: 0.68425477, y: 4.4705, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -931,7 +931,7 @@ MonoBehaviour:
   m_ShowCameraFrustum: 1
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 0
+  m_UpdateMethod: 2
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
@@ -1539,6 +1539,8 @@ MonoBehaviour:
   attackDinstance: 2
   BalaPrefab: {fileID: 1828367017769290038, guid: c705fa018e52b264985222d082fa3e94, type: 3}
   RecargaBala: 1
+  VelocidadBala: 3
+  Temporizador: 0
 --- !u!4 &789721829 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2145721761894099243, guid: e6a3080894ba6dd4db76e00ec3e7fdd7, type: 3}
@@ -2148,7 +2150,7 @@ Transform:
   m_GameObject: {fileID: 1131553007}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.68, y: 3.601399, z: -10}
+  m_LocalPosition: {x: 0.68, y: 4.751399, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3804,6 +3806,7 @@ MonoBehaviour:
   moving: 0
   angle: 0
   Salto: {fileID: 2039336510}
+  direccion: 0
   bullet: {fileID: 3291418023356413963, guid: ea234428e01a90343bc08bbe530b8191, type: 3}
   firePoint: {fileID: 547652424}
   arm: {fileID: 1141417218}
@@ -3875,7 +3878,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
@@ -3940,7 +3943,7 @@ Transform:
   m_GameObject: {fileID: 2039336504}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.68, y: -0.58, z: 0}
+  m_LocalPosition: {x: 0.68, y: 0.57, z: 0}
   m_LocalScale: {x: 0.20091216, y: 0.20091216, z: 0.20091216}
   m_ConstrainProportionsScale: 0
   m_Children:

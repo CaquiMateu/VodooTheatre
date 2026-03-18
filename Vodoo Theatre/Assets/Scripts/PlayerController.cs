@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public float angle;
     public AudioSource Salto;
     Vector3 TamañoBase;
+    public int direccion;
 
     //Ataque a distancia
     public GameObject bullet;
@@ -45,7 +46,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         TamañoBase = transform.localScale;
-
+        direccion = 1;
     }
 
 
@@ -101,16 +102,19 @@ public class PlayerController : MonoBehaviour
                 //Mirar a la Derecha
                 if (input > 0)
                 {
-                    transform.rotation = Quaternion.Euler(0, 0, 0);
+                    direccion = 1;
                 }
 
 
                 //Mirar a la izquierda
-                else if (input < 0)
+                if (input < 0)
                 {
-                    transform.rotation = Quaternion.Euler(0, 180, 0);
+                   direccion= -1;
                 }
             }
+
+            float scalex = Mathf.Abs(transform.localScale.x) * direccion;
+          transform.localScale = new Vector3 (scalex, transform.localScale.y, transform.localScale.z );
            
 
             //saltar
@@ -143,7 +147,7 @@ public class PlayerController : MonoBehaviour
             CargeTime -= 1 * Time.deltaTime;
             if (CargeTime <= 0)
             {
-                rb.transform.localScale = TamañoBase + new Vector3(0.05f, 0.05f, 0);
+                rb.transform.localScale = TamañoBase + new Vector3(0.05f* direccion, 0.05f, 0);
                 
             }
 
@@ -191,7 +195,7 @@ public class PlayerController : MonoBehaviour
         {
             Dashing = true;
 
-            rb.AddForce(transform.right * FuerzaDash, ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(direccion, 0) * FuerzaDash, ForceMode2D.Impulse);
 
             StartCoroutine(FinDashCrt());
 
@@ -259,7 +263,7 @@ public class PlayerController : MonoBehaviour
         MeleeAttackRange.gameObject.SetActive(false);
         MeleeAttackRangeDown.gameObject.SetActive(false);
         MeleeAttackRangeCharged.gameObject.SetActive(false);
-        rb.transform.localScale = TamañoBase;
+        rb.transform.localScale = new Vector2(direccion * TamañoBase.x, TamañoBase.y);
     }
 
     //Hace visible el área de comprobación del suelo en la escena para facilitar su ajuste
