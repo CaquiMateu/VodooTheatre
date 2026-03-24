@@ -71,6 +71,16 @@ public class PlayerController : MonoBehaviour
             mousePos.y - transform.position.y
         );
         // 4. Calcular el ángulo en grados
+        if (direccion == -1)
+        {
+            direction.x = -direction.x;
+            direction.y = -direction.y;
+        }
+        else
+        {
+            direction.x = direction.x;
+            direction.y = direction.y;
+        }
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         // 5. Rotar el brazo
@@ -147,7 +157,15 @@ public class PlayerController : MonoBehaviour
             CargeTime -= 1 * Time.deltaTime;
             if (CargeTime <= 0)
             {
-                rb.transform.localScale = TamañoBase + new Vector3(0.05f* direccion, 0.05f, 0);
+                if (direccion == -1)
+                {
+                    rb.transform.localScale = new Vector3(TamañoBase.x * direccion, TamañoBase.y , 0) - new Vector3(0.05f , -0.05f , 0);
+                }
+                else
+                {
+                    rb.transform.localScale = TamañoBase + new Vector3(0.05f * direccion, 0.05f * direccion, 0);
+                }
+                    
                 
             }
 
@@ -191,7 +209,7 @@ public class PlayerController : MonoBehaviour
         #endregion
         #region Dash
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && Dashing == false)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && Dashing == false && Aiming== false && Atacking == false)
         {
             Dashing = true;
 
