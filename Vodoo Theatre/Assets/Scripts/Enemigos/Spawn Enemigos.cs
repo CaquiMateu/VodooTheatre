@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,19 +6,23 @@ using UnityEngine;
 public class SpawnEnemigos : MonoBehaviour
 {
     [Header("Zonas")]
-    public GameObject ZonaDeSpawn1;
-    public GameObject ZonaDeSpawn2;
+    public GameObject[] ZonasDeSpawn;
 
     [Header("Tipos De Enemigos")]
     public GameObject[] Enemigos;
 
     [Header("Valores Del Spawn")]
     public float TiempoEntreSpawn;
-    public float CantidadDeEnemigosPorHorda;
-    public int NumeroDeHorda; 
-    public int CantidadDeEnemigosSpawneados;
-    public int EnemigosEnPantalla;
-    public int EnemigosBase = 8;
+    public float CantidadDeEnemigosPorHorda; //Enemigos que tienen que aparecer en el nivel
+    public int NumeroDeHorda; //El nivel en el que se encuentra el jugador
+    public int CantidadDeEnemigosSpawneados; //Recuento de enemigos spwneados en el nivel, en caso de ser igual a CantidadDeEnemigosPorHorda, llama a la función Spawn
+    public int EnemigosEnPantalla; //Te dice cuantos ennemigos hay actualmente vivos en pantalla
+    public int EnemigosBase = 8; //Número de enemigos base
+    public int NumAleatorioEnemigosOleada;
+    public int[] NumDeEnemigosGenerados;
+    int Tipo;
+    Vector3 Zona;
+
 
     public float FactorDeCrecimientoLineal = 1.5f;
     public float FactorDeCrecimientoExponencial = 0.01f;
@@ -31,16 +36,29 @@ public class SpawnEnemigos : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Spawn();
+            NumSpawnDificultad();
+            
+        }  
+        
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+           DecisiónNumAleatorio();
+            
         }
+
         if (Input.GetKeyDown(KeyCode.O))
         {
             NumeroDeHorda++;
+            CantidadDeEnemigosSpawneados = 0;
+            NumAleatorioEnemigosOleada = 0;
         }
+        EnemigosEnPantalla = GameObject.FindGameObjectsWithTag("Enemigo").Length;
     }
 
-    void Spawn()
+    void NumSpawnDificultad()
     {
+        //Dependiendo de el nivel en el que se encuentre el jugador el juego establece un número de monstruos que deben de aparecer en la horda.
+
         if (NumeroDeHorda <= 10)
         {
             CantidadDeEnemigosPorHorda = EnemigosBase + (FactorDeCrecimientoLineal * NumeroDeHorda);
@@ -49,9 +67,51 @@ public class SpawnEnemigos : MonoBehaviour
 
         else
         {
+            FactorDeCrecimientoLineal = 1.5f;
             CantidadDeEnemigosPorHorda = EnemigosBase + (FactorDeCrecimientoLineal * NumeroDeHorda) + FactorDeCrecimientoExponencial * Mathf.Pow(NumeroDeHorda, exponente);
             CantidadDeEnemigosPorHorda = Mathf.RoundToInt(CantidadDeEnemigosPorHorda);
         }
-       
+    }
+
+    void DecisiónNumAleatorio()
+    {
+        if (CantidadDeEnemigosPorHorda - CantidadDeEnemigosSpawneados == 0)
+        {
+            return;
+        }
+        if (CantidadDeEnemigosPorHorda - CantidadDeEnemigosSpawneados <= 8)
+        {
+            NumAleatorioEnemigosOleada = Mathf.RoundToInt(CantidadDeEnemigosPorHorda) - CantidadDeEnemigosSpawneados;
+            CantidadDeEnemigosSpawneados += NumAleatorioEnemigosOleada;
+        }
+
+        else
+        {
+            NumAleatorioEnemigosOleada = UnityEngine.Random.Range(4, 9);
+            CantidadDeEnemigosSpawneados += NumAleatorioEnemigosOleada;
+        }
+
+        Array.Resize(ref NumDeEnemigosGenerados, NumAleatorioEnemigosOleada);
+        for (int i = 0; i < NumDeEnemigosGenerados.Length; i++)
+        {
+
+            Tipo = UnityEngine.Random.Range(0, Enemigos.Length);
+
+            NumDeEnemigosGenerados[i]= Tipo;
+
+            ZonaSpawn();
+        }
+    }
+
+    void ZonaSpawn()
+    {
+        int NumZona = UnityEngine.Random.Range(0,ZonasDeSpawn.Length);
+        Zona = ZonasDeSpawn[NumZona].transform.position;
+        Spawn();
+    }
+
+    void Spawn()
+    {
+        Instantiate(Enemigos[Tipo], Zona, Quaternion.identity);
     }
 }

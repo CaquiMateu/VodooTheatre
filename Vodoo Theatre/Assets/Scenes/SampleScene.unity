@@ -898,7 +898,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.68452835, y: 4.47048, z: -10}
+  m_LocalPosition: {x: 0.68425477, y: 4.4705, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -996,16 +996,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1541b2b3bac965d4cbb49e79c7fd03ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ZonaDeSpawn1: {fileID: 240803552}
-  ZonaDeSpawn2: {fileID: 226943544}
-  Enemigos: []
+  ZonasDeSpawn:
+  - {fileID: 240803552}
+  - {fileID: 226943544}
+  Enemigos:
+  - {fileID: 6513706689391813294, guid: de5d3902186e2be4eb7e6773c8c669e8, type: 3}
+  - {fileID: 5910824641435647909, guid: c6250a9705c3c4b42964df8e8e64c901, type: 3}
   TiempoEntreSpawn: 0
   CantidadDeEnemigosPorHorda: 0
   NumeroDeHorda: 0
   CantidadDeEnemigosSpawneados: 0
   EnemigosEnPantalla: 0
   EnemigosBase: 8
-  FactorDeCrecimientoLineal: 1.5
+  NumAleatorioEnemigosOleada: 0
+  NumDeEnemigosGenerados: 
+  FactorDeCrecimientoLineal: 2
   FactorDeCrecimientoExponencial: 0.1
   exponente: 1.5
 --- !u!1001 &527697635

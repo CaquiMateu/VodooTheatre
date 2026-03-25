@@ -8,6 +8,7 @@ TagManager:
   - DontDestroyBullet
   - Ataque
   - Ataque Cargado
+  - Enemigo
   layers:
   - Default
   - TransparentFX
