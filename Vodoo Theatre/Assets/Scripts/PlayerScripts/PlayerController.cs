@@ -34,8 +34,9 @@ public class PlayerController : MonoBehaviour
     public float CargeTime = 1.5f;
     public int DañoAtaque = 20;
     public int DañoAtaqueCargado = 35;
+    bool Cargando = false; 
 
-    
+
     //Dash
     public float FuerzaDash = 10f;
     bool Dashing;
@@ -87,7 +88,7 @@ public class PlayerController : MonoBehaviour
         arm.transform.rotation = Quaternion.Euler(0, 0, angle);
 
 
-        if (Input.GetMouseButtonDown(1) && moving== false && Dashing == false && Atacking == false)
+        if (Input.GetMouseButtonDown(1) && moving== false && Dashing == false && Atacking == false && Cargando== false)
         {
             Aiming = true;
             arm.gameObject.SetActive(true);
@@ -153,7 +154,7 @@ public class PlayerController : MonoBehaviour
         //Ataque Lateral
         if (Input.GetMouseButton(0) && Aiming == false && GameObject.FindGameObjectWithTag("Ataque")==false && Dashing== false && !Input.GetKey(KeyCode.S))
         {
-            Atacking = true;
+            Cargando = true;
             CargeTime -= 1 * Time.deltaTime;
             if (CargeTime <= 0)
             {
@@ -171,28 +172,28 @@ public class PlayerController : MonoBehaviour
 
 
         }
-        else if (Input.GetMouseButtonUp(0) && CargeTime > 0 && !Input.GetKey(KeyCode.S) && Aiming == false && Dashing == false && GameObject.FindGameObjectWithTag("Ataque") == false)
+        else if (Input.GetMouseButtonUp(0) && CargeTime > 0 && !Input.GetKey(KeyCode.S) && Aiming == false && Dashing == false && GameObject.FindGameObjectWithTag("Ataque") == false && Atacking == false)
         {
             CargeTime = 1.5f;
             Atacking = true;
             MeleeAttackRange.gameObject.SetActive(true);
-            Invoke("cesaAtaque", 0.2f);
+            Invoke("cesaAtaque", 0.1f);
 
         }
 
         //Ataque Cargado
-        else if (Input.GetMouseButtonUp(0) && CargeTime <= 0 && Aiming == false && !Input.GetKey(KeyCode.S) && Dashing == false && GameObject.FindGameObjectWithTag("Ataque") == false)
+        else if (Input.GetMouseButtonUp(0) && CargeTime <= 0 && Aiming == false && !Input.GetKey(KeyCode.S) && Dashing == false && GameObject.FindGameObjectWithTag("Ataque") == false && Atacking== false)
         {
             CargeTime = 1.5f;
             Atacking = true;
             MeleeAttackRangeCharged.gameObject.SetActive(true);
-            Invoke("cesaAtaque", 0.5f);
+            Invoke("cesaAtaque", 0.2f);
         }
 
 
 
         //Ataque Hacia Abajo
-        if (Input.GetKey(KeyCode.S) && Aiming == false && GameObject.FindGameObjectWithTag("Ataque") == false && Dashing == false && IsGrounded == false)
+        if (Input.GetKey(KeyCode.S) && Aiming == false && GameObject.FindGameObjectWithTag("Ataque") == false && Dashing == false && IsGrounded == false && Atacking == false)
         {
             if (Input.GetMouseButtonUp(0))
             {
@@ -277,11 +278,21 @@ public class PlayerController : MonoBehaviour
 
     void cesaAtaque()
     {
-        Atacking = false;
+        StartCoroutine(Cooldown());
+
+    }
+
+    IEnumerator Cooldown()
+    {
         MeleeAttackRange.gameObject.SetActive(false);
         MeleeAttackRangeDown.gameObject.SetActive(false);
         MeleeAttackRangeCharged.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.13f);
+        Atacking = false;
+        Cargando = false;
+
         rb.transform.localScale = new Vector2(direccion * TamañoBase.x, TamañoBase.y);
+
     }
 
     //Hace visible el área de comprobación del suelo en la escena para facilitar su ajuste

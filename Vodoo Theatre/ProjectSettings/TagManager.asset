@@ -19,8 +19,8 @@ TagManager:
   - Proyectil
   - Hitbox
   - "L\xEDmiteC\xE1mara"
-  - 
-  - 
+  - Enemigo
+  - "L\xEDmiteJugador"
   - 
   - 
   - 
@@ -46,6 +46,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Enemigos
+    uniqueID: 3334121033
+    locked: 0
   - name: Player
     uniqueID: 2332769311
+    locked: 0
+  - name: "Tel\xF3n"
+    uniqueID: 3971623051
+    locked: 0
+  - name: "P\xFAblico"
+    uniqueID: 650100299
     locked: 0

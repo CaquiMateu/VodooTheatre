@@ -22,7 +22,7 @@ public class SpawnEnemigos : MonoBehaviour
     public int[] NumDeEnemigosGenerados;
     int Tipo;
     Vector3 Zona;
-
+    bool HordaAcabada = false;
 
     public float FactorDeCrecimientoLineal = 1.5f;
     public float FactorDeCrecimientoExponencial = 0.01f;
@@ -31,28 +31,27 @@ public class SpawnEnemigos : MonoBehaviour
     void Start()
     {
         NumeroDeHorda = 1;
+        NumSpawnDificultad();
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+       
+        EnemigosEnPantalla = GameObject.FindGameObjectsWithTag("Enemigo").Length;
+        if (EnemigosEnPantalla == 0 )
         {
-            NumSpawnDificultad();
-            
-        }  
-        
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-           DecisiónNumAleatorio();
-            
+            DecisiónNumAleatorio();
         }
-
-        if (Input.GetKeyDown(KeyCode.O))
+        if ( HordaAcabada== true)
         {
+            HordaAcabada = false;
             NumeroDeHorda++;
             CantidadDeEnemigosSpawneados = 0;
             NumAleatorioEnemigosOleada = 0;
+            NumSpawnDificultad();
         }
-        EnemigosEnPantalla = GameObject.FindGameObjectsWithTag("Enemigo").Length;
+        
+            
+        
     }
 
     void NumSpawnDificultad()
@@ -77,6 +76,7 @@ public class SpawnEnemigos : MonoBehaviour
     {
         if (CantidadDeEnemigosPorHorda - CantidadDeEnemigosSpawneados == 0)
         {
+            HordaAcabada = true;
             return;
         }
         if (CantidadDeEnemigosPorHorda - CantidadDeEnemigosSpawneados <= 8)
@@ -105,6 +105,7 @@ public class SpawnEnemigos : MonoBehaviour
 
     void ZonaSpawn()
     {
+        
         int NumZona = UnityEngine.Random.Range(0,ZonasDeSpawn.Length);
         Zona = ZonasDeSpawn[NumZona].transform.position;
         Spawn();
@@ -112,6 +113,8 @@ public class SpawnEnemigos : MonoBehaviour
 
     void Spawn()
     {
-        Instantiate(Enemigos[Tipo], Zona, Quaternion.identity);
+        int Adiciónenx = UnityEngine.Random.Range(-5, 5);
+        int Adicióneny = UnityEngine.Random.Range(0, 8);
+        Instantiate(Enemigos[Tipo], Zona + new Vector3(Adiciónenx, Adicióneny, 0) , Quaternion.identity);
     }
 }

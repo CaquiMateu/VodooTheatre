@@ -1,0 +1,46 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EnemigoTerrestreController : MonoBehaviour
+{
+   public float velocidad = 5f;
+   public Transform jugador;
+   public int daño = 1;
+   public Rigidbody2D rb;
+    private Vector2 movimiento;
+    void Start()
+    {
+        jugador = GameObject.FindGameObjectWithTag("Player").transform;
+        rb = GetComponent<Rigidbody2D>();
+        gameObject.transform.position= new Vector3(transform.position.x, -1, 0);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (jugador != null)
+        {
+            // Calcula dirección sin mover verticalmente
+            Vector3 direccion = jugador.position - transform.position;
+            direccion.Normalize();
+            movimiento = new Vector2(direccion.x, 0); // Solo eje X para terrestre
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (jugador != null)
+        {
+            // Mueve al enemigo
+            rb.velocity = new Vector2(movimiento.x * velocidad, rb.velocity.y);
+
+            // Voltear el sprite según la dirección
+            if (movimiento.x > 0)
+                transform.localScale = new Vector3(1, 1, 1);
+            else if (movimiento.x < 0)
+                transform.localScale = new Vector3(-1, 1, 1);
+        }
+    }
+}
+
