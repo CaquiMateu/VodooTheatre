@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public AudioSource Salto;
     Vector3 TamañoBase;
     public int direccion;
+    public float Aceleración = 10;
 
     //Ataque a distancia
     public GameObject bullet;
@@ -236,9 +237,10 @@ public class PlayerController : MonoBehaviour
     {
         if (Aiming == false && Dashing == false)
         {
-            
-            //modificador de velocidad en el eje X y dejarla igual en el eje Y
-            rb.velocity = new Vector2(input * Movespeed, rb.velocity.y);
+
+            float MaxSpeed = input * Movespeed;
+            float SpeedToApply = MaxSpeed - rb.velocity.x;
+            rb.AddForce(new Vector2(SpeedToApply * Aceleración, 0));
         }
         else if (Dashing == false)
         {
@@ -278,6 +280,18 @@ public class PlayerController : MonoBehaviour
 
     void cesaAtaque()
     {
+        if (direccion < 0)
+        {
+            rb.AddForce(new Vector2 (20, 0), ForceMode2D.Impulse);
+        }
+        else 
+        {
+            rb.AddForce(new Vector2(-20, 0), ForceMode2D.Impulse);
+
+        }
+
+        
+
         StartCoroutine(Cooldown());
 
     }
