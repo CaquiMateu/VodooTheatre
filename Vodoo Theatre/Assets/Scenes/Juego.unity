@@ -4361,7 +4361,7 @@ GameObject:
   - component: {fileID: 2039336505}
   - component: {fileID: 2039336510}
   - component: {fileID: 2039336511}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4650,6 +4650,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   MaxHealth: 3
+  healthIconLayout: {fileID: 1826827252}
 --- !u!1 &2087134415
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using Cinemachine;
+using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
@@ -41,7 +42,9 @@ public class PlayerController : MonoBehaviour
     //Dash
     public float FuerzaDash = 10f;
     bool Dashing;
-    public float TiempoDash = 0.5f;
+    public float TiempoDash = 1.5f;
+    float CooldownDash = 0.3f; 
+    bool DashOnCooldown = false;
 
 
     void Start()
@@ -211,7 +214,7 @@ public class PlayerController : MonoBehaviour
         #endregion
         #region Dash
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && Dashing == false && Aiming== false && Atacking == false)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && Dashing == false && Aiming== false && Atacking == false && DashOnCooldown==false)
         {
             Dashing = true;
 
@@ -228,10 +231,18 @@ public class PlayerController : MonoBehaviour
     IEnumerator FinDashCrt()
     {
         yield return new WaitForSeconds(TiempoDash);
+        
+        DashOnCooldown = true;
         Dashing = false;
+        StartCoroutine(DashCooldownCrt());
     }
 
-    
+    IEnumerator DashCooldownCrt()
+    {
+        yield return new WaitForSeconds(CooldownDash);
+        DashOnCooldown = false;
+       
+    }
     
     private void FixedUpdate()
     {
