@@ -5,29 +5,20 @@ using UnityEngine;
 
 public class GameManger : MonoBehaviour
 {
-    public GameObject PrefabMurciélago;
+   public PlayerController PlayerController;
+   public SpawnEnemigos SpawnEnemigos;
 
-    void Start()
+   
+
+    public void CambioDeEscenarioANoche()
     {
-        
+        PlayerController.CambioDeZonaANoche();
+
     }
-
-    
-    void Update()
+    public void CambioDeEscenarioADia()
     {
-        if (Input.GetKey(KeyCode.LeftControl)) 
-        {
-            // 1. Obtener la posición del ratón en la pantalla
-            Vector3 mousePos = Input.mousePosition;
-
-
-            // 2. Convertir la posición de la pantalla a coordenadas del mundo
-            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-
-            if (Input.GetMouseButtonDown(2))
-            {
-                Instantiate(PrefabMurciélago, new Vector3 (mousePos.x, mousePos.y, 0), Quaternion.identity);
-            }
-        }
+        PlayerController.CambioDeZonaADia();
+        SpawnEnemigos.NumSpawnDificultad();
+        SpawnEnemigos.HordaAcabada = false;
     }
 }

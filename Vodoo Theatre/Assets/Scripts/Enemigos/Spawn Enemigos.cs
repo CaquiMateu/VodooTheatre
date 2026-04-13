@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,6 +6,7 @@ using UnityEngine;
 
 public class SpawnEnemigos : MonoBehaviour
 {
+    public GameManger GameManger;
     [Header("Zonas")]
     public GameObject[] ZonasDeSpawn;
 
@@ -22,7 +24,8 @@ public class SpawnEnemigos : MonoBehaviour
     public int[] NumDeEnemigosGenerados;
     int Tipo;
     Vector3 Zona;
-    bool HordaAcabada = false;
+    public bool HordaAcabada = false;
+    bool Antibucle = false;
 
     public float FactorDeCrecimientoLineal = 1.5f;
     public float FactorDeCrecimientoExponencial = 0.01f;
@@ -35,26 +38,28 @@ public class SpawnEnemigos : MonoBehaviour
     }
     void Update()
     {
-       
+      
+
         EnemigosEnPantalla = GameObject.FindGameObjectsWithTag("Enemigo").Length;
-        if (EnemigosEnPantalla == 0 )
+        if (EnemigosEnPantalla == 0 && HordaAcabada == false)
         {
             DecisiónNumAleatorio();
         }
-        if ( HordaAcabada== true)
+        if ( HordaAcabada== true && Antibucle == true)
         {
-            HordaAcabada = false;
+           Antibucle = false;
             NumeroDeHorda++;
             CantidadDeEnemigosSpawneados = 0;
             NumAleatorioEnemigosOleada = 0;
-            NumSpawnDificultad();
+            GameManger.CambioDeEscenarioANoche();
+
         }
         
             
         
     }
 
-    void NumSpawnDificultad()
+    public void NumSpawnDificultad()
     {
         //Dependiendo de el nivel en el que se encuentre el jugador el juego establece un número de monstruos que deben de aparecer en la horda.
 
@@ -77,6 +82,7 @@ public class SpawnEnemigos : MonoBehaviour
         if (CantidadDeEnemigosPorHorda - CantidadDeEnemigosSpawneados == 0)
         {
             HordaAcabada = true;
+            Antibucle = true;
             return;
         }
         if (CantidadDeEnemigosPorHorda - CantidadDeEnemigosSpawneados <= 8)

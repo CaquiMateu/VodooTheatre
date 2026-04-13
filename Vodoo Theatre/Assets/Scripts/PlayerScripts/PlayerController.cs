@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     Vector3 TamañoBase;
     public int direccion;
     public float Aceleración = 10;
+    public Transform PuntoCambioZonaNoche;
+    public Transform PuntoCambioZonaDia;
 
     //Ataque a distancia
     public GameObject bullet;
@@ -327,5 +329,13 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireCube(transform.position + GroundCheckPosition, GroundCheckSize);
     }
 
+    public void CambioDeZonaANoche()
+    {
+        transform.position = PuntoCambioZonaNoche.position;
+    }
    
+    public void CambioDeZonaADia()
+    {
+        transform.position = PuntoCambioZonaDia.position;
+    }
 }
