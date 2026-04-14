@@ -9,6 +9,7 @@ public class GameManger : MonoBehaviour
    public PlayerController PlayerController;
    public SpawnEnemigos SpawnEnemigos;
    public CinemachineConfiner2D CinemachineConfiner2D;
+   public Foco Foco;
     public Collider2D CámaraDía;
     public Collider2D CámaraNoche;
     private void Start()
@@ -27,6 +28,7 @@ public class GameManger : MonoBehaviour
     public void CambioDeEscenarioANoche()
     {
         PlayerController.CambioDeZonaANoche();
+        Foco.EnOscuridad();
         CambioDecámara(CámaraNoche);
     }
 
@@ -35,6 +37,7 @@ public class GameManger : MonoBehaviour
     {
        
         PlayerController.CambioDeZonaADia();
+        Foco.EnLuz();
         CambioDecámara(CámaraDía);
         SpawnEnemigos.NumSpawnDificultad();
         SpawnEnemigos.HordaAcabada = false;
