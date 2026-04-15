@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
+    public InteractTrigger InteractTrigger;
     public Rigidbody2D rb;
     public float Movespeed = 4;
     public float jumpforce = 4000;
@@ -61,172 +62,175 @@ public class PlayerController : MonoBehaviour
     {
         GroundChecker();
         MoveChecker();
-        #region Rotación Brazo
-
-
-        // 1. Obtener la posición del ratón en la pantalla
-        Vector3 mousePos = Input.mousePosition;
-
-
-        // 2. Convertir la posición de la pantalla a coordenadas del mundo
-        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-
-        // 3. Calcular la dirección
-        Vector2 direction = new Vector2
-        (
-            mousePos.x - transform.position.x,
-            mousePos.y - transform.position.y
-        );
-        // 4. Calcular el ángulo en grados
-        if (direccion == -1)
+        if (InteractTrigger.hablando == false)
         {
-            direction.x = -direction.x;
-            direction.y = -direction.y;
-        }
-        else
-        {
-            direction.x = direction.x;
-            direction.y = direction.y;
-        }
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        // 5. Rotar el brazo
-        arm.transform.rotation = Quaternion.Euler(0, 0, angle);
+            #region Rotación Brazo
 
 
-        if (Input.GetMouseButtonDown(1) && moving== false && Dashing == false && Atacking == false && Cargando== false)
-        {
-            Aiming = true;
-            arm.gameObject.SetActive(true);
-        }
-        else if (Input.GetMouseButtonUp(1))
-        {
-            Aiming = false;
-            arm.gameObject.SetActive(false);
-           
-        }
+            // 1. Obtener la posición del ratón en la pantalla
+            Vector3 mousePos = Input.mousePosition;
 
 
-        #endregion
-        #region movimiento
-       
-        if (Aiming == false)
-        {
-            input = Input.GetAxisRaw("Horizontal");
-           
-            if (Atacking == false)
+            // 2. Convertir la posición de la pantalla a coordenadas del mundo
+            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+
+            // 3. Calcular la dirección
+            Vector2 direction = new Vector2
+            (
+                mousePos.x - transform.position.x,
+                mousePos.y - transform.position.y
+            );
+            // 4. Calcular el ángulo en grados
+            if (direccion == -1)
             {
-                //Mirar a la Derecha
-                if (input > 0)
-                {
-                    direccion = 1;
-                }
-
-
-                //Mirar a la izquierda
-                if (input < 0)
-                {
-                   direccion= -1;
-                }
+                direction.x = -direction.x;
+                direction.y = -direction.y;
             }
-
-            float scalex = Mathf.Abs(transform.localScale.x) * direccion;
-          transform.localScale = new Vector3 (scalex, transform.localScale.y, transform.localScale.z );
-           
-
-            //saltar
-            if (Input.GetKeyDown(KeyCode.Space) && IsGrounded == true)
+            else
             {
-                AudioSource.PlayClipAtPoint(Salto.clip, transform.position);
-                rb.AddForce(new Vector2(0, jumpforce), ForceMode2D.Impulse);
+                direction.x = direction.x;
+                direction.y = direction.y;
             }
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-            //Comprobar si estamos en el suelo
-              
-        } 
-        else
-        {
-            moving = false;
-        }
-        #endregion;
-        #region Disparo
-        if (Input.GetMouseButtonDown(0) && Aiming == true && GameObject.FindGameObjectWithTag("Proyectil") == false && Atacking==false)
-        {
-            Instantiate(bullet, firePoint.transform.position, firePoint.transform.rotation);
-        }
-        #endregion
-        #region Ataque cuerpo a cuerpo
+            // 5. Rotar el brazo
+            arm.transform.rotation = Quaternion.Euler(0, 0, angle);
 
-        //Ataque Lateral
-        if (Input.GetMouseButton(0) && Aiming == false && GameObject.FindGameObjectWithTag("Ataque")==false && Dashing== false && !Input.GetKey(KeyCode.S))
-        {
-            Cargando = true;
-            CargeTime -= 1 * Time.deltaTime;
-            if (CargeTime <= 0)
+
+            if (Input.GetMouseButtonDown(1) && moving == false && Dashing == false && Atacking == false && Cargando == false)
             {
-                if (direccion == -1)
-                {
-                    rb.transform.localScale = new Vector3(TamañoBase.x * direccion, TamañoBase.y , 0) - new Vector3(0.05f , -0.05f , 0);
-                }
-                else
-                {
-                    rb.transform.localScale = TamañoBase + new Vector3(0.05f * direccion, 0.05f * direccion, 0);
-                }
-                    
-                
+                Aiming = true;
+                arm.gameObject.SetActive(true);
+            }
+            else if (Input.GetMouseButtonUp(1))
+            {
+                Aiming = false;
+                arm.gameObject.SetActive(false);
+
             }
 
 
-        }
-        else if (Input.GetMouseButtonUp(0) && CargeTime > 0 && !Input.GetKey(KeyCode.S) && Aiming == false && Dashing == false && GameObject.FindGameObjectWithTag("Ataque") == false && Atacking == false)
-        {
-            CargeTime = 1.5f;
-            Atacking = true;
-            MeleeAttackRange.gameObject.SetActive(true);
-            Invoke("cesaAtaque", 0.1f);
+            #endregion
+            #region movimiento
 
-        }
-
-        //Ataque Cargado
-        else if (Input.GetMouseButtonUp(0) && CargeTime <= 0 && Aiming == false && !Input.GetKey(KeyCode.S) && Dashing == false && GameObject.FindGameObjectWithTag("Ataque") == false && Atacking== false)
-        {
-            CargeTime = 1.5f;
-            Atacking = true;
-            MeleeAttackRangeCharged.gameObject.SetActive(true);
-            Invoke("cesaAtaque", 0.2f);
-        }
-
-
-
-        //Ataque Hacia Abajo
-        if (Input.GetKey(KeyCode.S) && Aiming == false && GameObject.FindGameObjectWithTag("Ataque") == false && Dashing == false && IsGrounded == false && Atacking == false)
-        {
-            if (Input.GetMouseButtonUp(0))
+            if (Aiming == false)
             {
+                input = Input.GetAxisRaw("Horizontal");
+
+                if (Atacking == false)
+                {
+                    //Mirar a la Derecha
+                    if (input > 0)
+                    {
+                        direccion = 1;
+                    }
+
+
+                    //Mirar a la izquierda
+                    if (input < 0)
+                    {
+                        direccion = -1;
+                    }
+                }
+
+                float scalex = Mathf.Abs(transform.localScale.x) * direccion;
+                transform.localScale = new Vector3(scalex, transform.localScale.y, transform.localScale.z);
+
+
+                //saltar
+                if (Input.GetKeyDown(KeyCode.Space) && IsGrounded == true)
+                {
+                    AudioSource.PlayClipAtPoint(Salto.clip, transform.position);
+                    rb.AddForce(new Vector2(0, jumpforce), ForceMode2D.Impulse);
+                }
+
+                //Comprobar si estamos en el suelo
+
+            }
+            else
+            {
+                moving = false;
+            }
+            #endregion;
+            #region Disparo
+            if (Input.GetMouseButtonDown(0) && Aiming == true && GameObject.FindGameObjectWithTag("Proyectil") == false && Atacking == false)
+            {
+                Instantiate(bullet, firePoint.transform.position, firePoint.transform.rotation);
+            }
+            #endregion
+            #region Ataque cuerpo a cuerpo
+
+            //Ataque Lateral
+            if (Input.GetMouseButton(0) && Aiming == false && GameObject.FindGameObjectWithTag("Ataque") == false && Dashing == false && !Input.GetKey(KeyCode.S))
+            {
+                Cargando = true;
+                CargeTime -= 1 * Time.deltaTime;
+                if (CargeTime <= 0)
+                {
+                    if (direccion == -1)
+                    {
+                        rb.transform.localScale = new Vector3(TamañoBase.x * direccion, TamañoBase.y, 0) - new Vector3(0.05f, -0.05f, 0);
+                    }
+                    else
+                    {
+                        rb.transform.localScale = TamañoBase + new Vector3(0.05f * direccion, 0.05f * direccion, 0);
+                    }
+
+
+                }
+
+
+            }
+            else if (Input.GetMouseButtonUp(0) && CargeTime > 0 && !Input.GetKey(KeyCode.S) && Aiming == false && Dashing == false && GameObject.FindGameObjectWithTag("Ataque") == false && Atacking == false)
+            {
+                CargeTime = 1.5f;
                 Atacking = true;
-                MeleeAttackRangeDown.gameObject.SetActive(true);
-                Invoke("cesaAtaque", 0.2f);
+                MeleeAttackRange.gameObject.SetActive(true);
+                Invoke("cesaAtaque", 0.1f);
 
-               
             }
-            
 
+            //Ataque Cargado
+            else if (Input.GetMouseButtonUp(0) && CargeTime <= 0 && Aiming == false && !Input.GetKey(KeyCode.S) && Dashing == false && GameObject.FindGameObjectWithTag("Ataque") == false && Atacking == false)
+            {
+                CargeTime = 1.5f;
+                Atacking = true;
+                MeleeAttackRangeCharged.gameObject.SetActive(true);
+                Invoke("cesaAtaque", 0.2f);
+            }
+
+
+
+            //Ataque Hacia Abajo
+            if (Input.GetKey(KeyCode.S) && Aiming == false && GameObject.FindGameObjectWithTag("Ataque") == false && Dashing == false && IsGrounded == false && Atacking == false)
+            {
+                if (Input.GetMouseButtonUp(0))
+                {
+                    Atacking = true;
+                    MeleeAttackRangeDown.gameObject.SetActive(true);
+                    Invoke("cesaAtaque", 0.2f);
+
+
+                }
+
+
+            }
+
+            #endregion
+            #region Dash
+
+            if (Input.GetKeyDown(KeyCode.LeftShift) && Dashing == false && Aiming == false && Atacking == false && DashOnCooldown == false)
+            {
+                Dashing = true;
+
+                rb.AddForce(new Vector2(direccion, 0) * FuerzaDash, ForceMode2D.Impulse);
+
+                StartCoroutine(FinDashCrt());
+
+            }
+            #endregion
         }
 
-        #endregion
-        #region Dash
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && Dashing == false && Aiming== false && Atacking == false && DashOnCooldown==false)
-        {
-            Dashing = true;
-
-            rb.AddForce(new Vector2(direccion, 0) * FuerzaDash, ForceMode2D.Impulse);
-
-            StartCoroutine(FinDashCrt());
-
-        }
-        #endregion
-     
     }
 
 
