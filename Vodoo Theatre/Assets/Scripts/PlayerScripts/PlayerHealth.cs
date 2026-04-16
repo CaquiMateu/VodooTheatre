@@ -44,7 +44,7 @@ public class PlayerHealth : MonoBehaviour
     IEnumerator InvulnerableTimer()
     {
         esInvulnerable = true;
-        gameObject.layer = LayerMask.NameToLayer("Enemigo");
+        gameObject.layer = LayerMask.NameToLayer("Invunerable");
         GetComponent<SpriteRenderer>().color = Color.red;
         yield return new WaitForSeconds(InvulTime);
         esInvulnerable = false;

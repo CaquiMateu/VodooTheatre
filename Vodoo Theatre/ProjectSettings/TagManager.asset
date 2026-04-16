@@ -9,6 +9,7 @@ TagManager:
   - Ataque
   - Ataque Cargado
   - Enemigo
+  - Hablar
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - Enemigo
   - "L\xEDmiteJugador"
   - Player
-  - 
+  - Invunerable
   - 
   - 
   - 

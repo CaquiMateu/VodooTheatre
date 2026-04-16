@@ -1,55 +1,79 @@
 using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
 using Cinemachine;
 using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Variables
+    [Header ("Otros Códigos")]
+
     public InteractTrigger InteractTrigger;
-    public Rigidbody2D rb;
+   
+
+    [Header ("Valores Movimiento")]
+
     public float Movespeed = 4;
     public float jumpforce = 4000;
-    public bool IsGrounded = true;
-    public Vector3 GroundCheckPosition;
-    public Vector2 GroundCheckSize;
-    public LayerMask GroundLayer;
-    float input;
-    public bool moving = false;
-    public float angle;
-    public AudioSource Salto;
-    Vector3 TamañoBase;
+    public bool IsGrounded = true; 
     public int direccion;
-    public float Aceleración = 10;
-    public Transform PuntoCambioZonaNoche;
-    public Transform PuntoCambioZonaDia;
+    public float Aceleración = 10; 
+    public bool moving = false;
+    public float FuerzaDash = 10f;
+    bool Dashing;
+    public float TiempoDash = 1.5f;
+    float CooldownDash = 0.3f;
+    bool DashOnCooldown = false;
 
-    //Ataque a distancia
-    public GameObject bullet;
-    public GameObject firePoint;
-    public GameObject arm;
-    public bool Aiming = false;
 
-    //Ataque cuerpo a cuerpo
+    [Header ("Valores Ataque Melee")]
+
     public bool Atacking = false;
     public GameObject MeleeAttackRangeDown;
     public GameObject MeleeAttackRange;
     public GameObject MeleeAttackRangeCharged;
     public float CargeTime = 1.5f;
-    public int DañoAtaque = 20;
-    public int DañoAtaqueCargado = 35;
-    bool Cargando = false; 
+    public int DañoAtaque = 1;
+    public int DañoAtaqueCargado = 3;
+    bool Cargando = false;
 
+    [Header ("Valores Ataque Distancia")]
 
-    //Dash
-    public float FuerzaDash = 10f;
-    bool Dashing;
-    public float TiempoDash = 1.5f;
-    float CooldownDash = 0.3f; 
-    bool DashOnCooldown = false;
+    public GameObject bullet;
+    public GameObject firePoint;
+    public GameObject arm;
+    public bool Aiming = false;
+    public float angle;
 
+    [Header ("Otras Variables")]
 
+    Vector3 TamañoBase; 
+    public Rigidbody2D rb;
+
+    [Header ("Checkers")]
+
+    public Vector3 GroundCheckPosition;
+    public Vector2 GroundCheckSize;
+
+    [Header ("Layers")]
+
+    public LayerMask GroundLayer;
+
+    [Header ("Audio")]
+   
+    public AudioSource Salto;
+
+    [Header ("Cambios de Zona")]
+   
+    public Transform PuntoCambioZonaNoche;
+    public Transform PuntoCambioZonaDia;
+
+    //Variables Privadas
+    float input;
+
+    #endregion
+    
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -233,7 +257,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-
+    //Fin Del Dash
     IEnumerator FinDashCrt()
     {
         yield return new WaitForSeconds(TiempoDash);
@@ -242,7 +266,7 @@ public class PlayerController : MonoBehaviour
         Dashing = false;
         StartCoroutine(DashCooldownCrt());
     }
-
+    //Cooldown del Dash
     IEnumerator DashCooldownCrt()
     {
         yield return new WaitForSeconds(CooldownDash);
@@ -252,6 +276,7 @@ public class PlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
+        //Movimiento nuevo
         if (Aiming == false && Dashing == false)
         {
 
@@ -267,6 +292,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    //Detecta si está en el suelo o no
     void GroundChecker()
     {
         Collider2D ground = Physics2D.OverlapBox(transform.position + GroundCheckPosition, GroundCheckSize, 0, GroundLayer);
@@ -283,6 +309,8 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+    //Detecta si está en movimiento
     void MoveChecker()
     {
         if (Input.GetKey(KeyCode.A)|| Input.GetKey(KeyCode.D)||Input.GetKey(KeyCode.RightArrow)|| Input.GetKey(KeyCode.LeftArrow))
@@ -295,6 +323,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //Se llama cada vez que se termina de atacar y añade knockback 
     void cesaAtaque()
     {
         if (direccion < 0)
@@ -313,6 +342,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    //Cooldown del Ataque
     IEnumerator Cooldown()
     {
         MeleeAttackRange.gameObject.SetActive(false);
@@ -333,6 +363,7 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireCube(transform.position + GroundCheckPosition, GroundCheckSize);
     }
 
+    #region Zonas Día y Noche
     public void CambioDeZonaANoche()
     {
         transform.position = PuntoCambioZonaNoche.position;
@@ -342,4 +373,5 @@ public class PlayerController : MonoBehaviour
     {
         transform.position = PuntoCambioZonaDia.position;
     }
+    #endregion
 }
