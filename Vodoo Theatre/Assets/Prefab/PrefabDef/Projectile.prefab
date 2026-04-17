@@ -175,11 +175,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1c17716119f8fb4eaedfe2fd33498cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 0}
   speed: 24.9
   ExtraRotation: 30.5
   lifeTime: 3
   SpawnSound: {fileID: -4705660625309929031}
   "Da\xF1oBala": 2
+  Cooldown: 0.5
+  SpriteRenderer: {fileID: 6622978421950204638}
+  Collider: {fileID: 497498050212913263}
 --- !u!82 &-4705660625309929031
 AudioSource:
   m_ObjectHideFlags: 0

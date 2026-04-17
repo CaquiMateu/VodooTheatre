@@ -5,16 +5,20 @@ using UnityEngine;
 
 public class ProjectileController : MonoBehaviour
 {
+    public PlayerController playerController;
     Rigidbody2D rb;
     public float speed = 10f;
     public float ExtraRotation = 0f;
     public float lifeTime = 5f;
     public AudioSource SpawnSound;
     public int DañoBala = 25;
+    public float Cooldown;
+    public SpriteRenderer SpriteRenderer;
+    public Collider2D Collider;
 
     void Start()
     {
-
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody2D>();
         SpawnSound.Play();
         Vector3 mousePos = Input.mousePosition;
@@ -43,19 +47,34 @@ public class ProjectileController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        if (playerController != null) 
+        {
+            Debug.Log("CodigoRecibido");
+        }
 
     }
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("DontDestroyBullet") == false)
         {
-            Destroy(this.gameObject);
+
+            Debug.Log("Hostión");
+            StartCoroutine(CooldownBala());
+            SpriteRenderer.enabled = false;
+            Collider.enabled = false;
+
+
         }
-       
     }
     void ProjectileLifeTime()
     {
+        Destroy(gameObject);
+    }
+
+    IEnumerator CooldownBala()
+    {
+        yield return new WaitForSeconds(Cooldown);
+        playerController.Disparando = false;
         Destroy(gameObject);
     }
 }

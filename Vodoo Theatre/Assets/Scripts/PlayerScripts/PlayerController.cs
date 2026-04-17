@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
     public GameObject arm;
     public bool Aiming = false;
     public float angle;
-
+    public bool Disparando = false;
     [Header ("Otras Variables")]
 
     Vector3 TamañoBase; 
@@ -177,8 +177,9 @@ public class PlayerController : MonoBehaviour
             }
             #endregion;
             #region Disparo
-            if (Input.GetMouseButtonDown(0) && Aiming == true && GameObject.FindGameObjectWithTag("Proyectil") == false && Atacking == false)
+            if (Input.GetMouseButtonDown(0) && Aiming == true && Disparando == false && Atacking == false)
             {
+                Disparando = true;
                 Instantiate(bullet, firePoint.transform.position, firePoint.transform.rotation);
             }
             #endregion

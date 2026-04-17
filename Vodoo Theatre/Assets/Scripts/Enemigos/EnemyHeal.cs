@@ -31,7 +31,7 @@ public class EnemyHeal : MonoBehaviour
             }
              
             VidaEnemigo -= ProjectilDaño.DañoBala;
-            Destroy(collision.gameObject);
+           
 
             if (VidaEnemigo <= 0)
             {
