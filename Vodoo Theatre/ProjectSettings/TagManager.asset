@@ -50,6 +50,9 @@ TagManager:
   - name: Enemigos
     uniqueID: 3334121033
     locked: 0
+  - name: Objetos
+    uniqueID: 867214577
+    locked: 0
   - name: Player
     uniqueID: 2332769311
     locked: 0

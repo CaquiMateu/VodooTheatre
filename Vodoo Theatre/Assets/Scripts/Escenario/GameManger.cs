@@ -6,12 +6,13 @@ using Cinemachine;
 
 public class GameManger : MonoBehaviour
 {
+   public TiendaManager TiendaManager;
    public PlayerController PlayerController;
    public SpawnEnemigos SpawnEnemigos;
    public CinemachineConfiner2D CinemachineConfiner2D;
    public Foco Foco;
-    public Collider2D CámaraDía;
-    public Collider2D CámaraNoche;
+   public Collider2D CámaraDía;
+   public Collider2D CámaraNoche;
     private void Start()
     {
         CambioDecámara(CámaraDía);
@@ -30,6 +31,7 @@ public class GameManger : MonoBehaviour
         PlayerController.CambioDeZonaANoche();
         Foco.EnOscuridad();
         CambioDecámara(CámaraNoche);
+        TiendaManager.ActivarTienda();
     }
 
     
