@@ -30,6 +30,7 @@ public class SpawnEnemigos : MonoBehaviour
     public float FactorDeCrecimientoLineal = 1.5f;
     public float FactorDeCrecimientoExponencial = 0.01f;
     public float exponente = 0.5f; 
+    bool BossFight= false;
 
     void Start()
     {
@@ -61,24 +62,33 @@ public class SpawnEnemigos : MonoBehaviour
 
     public void NumSpawnDificultad()
     {
+        if (NumeroDeHorda == 2)
+        {
+            BossFight = true;
+        }
         //Dependiendo de el nivel en el que se encuentre el jugador el juego establece un número de monstruos que deben de aparecer en la horda.
-
-        if (NumeroDeHorda <= 10)
+        if (BossFight == false) 
         {
-            CantidadDeEnemigosPorHorda = EnemigosBase + (FactorDeCrecimientoLineal * NumeroDeHorda);
-            CantidadDeEnemigosPorHorda = Mathf.RoundToInt(CantidadDeEnemigosPorHorda);
-        }
+            if (NumeroDeHorda <= 10)
+            {
+                CantidadDeEnemigosPorHorda = EnemigosBase + (FactorDeCrecimientoLineal * NumeroDeHorda);
+                CantidadDeEnemigosPorHorda = Mathf.RoundToInt(CantidadDeEnemigosPorHorda);
+            }
 
-        else
-        {
-            FactorDeCrecimientoLineal = 1.5f;
-            CantidadDeEnemigosPorHorda = EnemigosBase + (FactorDeCrecimientoLineal * NumeroDeHorda) + FactorDeCrecimientoExponencial * Mathf.Pow(NumeroDeHorda, exponente);
-            CantidadDeEnemigosPorHorda = Mathf.RoundToInt(CantidadDeEnemigosPorHorda);
+            else
+            {
+                FactorDeCrecimientoLineal = 1.5f;
+                CantidadDeEnemigosPorHorda = EnemigosBase + (FactorDeCrecimientoLineal * NumeroDeHorda) + FactorDeCrecimientoExponencial * Mathf.Pow(NumeroDeHorda, exponente);
+                CantidadDeEnemigosPorHorda = Mathf.RoundToInt(CantidadDeEnemigosPorHorda);
+            }
         }
+       
     }
 
     void DecisiónNumAleatorio()
     {
+        if (BossFight == true)return;
+
         if (CantidadDeEnemigosPorHorda - CantidadDeEnemigosSpawneados == 0)
         {
             HordaAcabada = true;
