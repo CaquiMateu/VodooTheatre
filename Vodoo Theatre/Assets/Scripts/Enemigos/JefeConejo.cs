@@ -8,17 +8,24 @@ public class JefeConejo : MonoBehaviour
     public int daño;
     public int acciones;
     public float velocidad = 4;
+    public float fuerzaSalto;
+    public GameObject IconoAdvertenciaSalto;
     Rigidbody2D rb;
     bool INvunerable = false;
     public bool Accionando = false;
     public bool chasing = false;
+    public bool Saltando = false;
     Vector2 movimiento;
     Vector2 TamañoBase;
-    
+    public Vector2 PosiciónCaida;
+    float GravedadBase;
+
+
     void Start()
     {
         jugador = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
+        GravedadBase = rb.gravityScale;
         TamañoBase = this.gameObject.transform.localScale;
     }
 
@@ -46,7 +53,8 @@ public class JefeConejo : MonoBehaviour
                     break;
 
                 case 2:
-                    StartCoroutine(Cooldown());
+
+                    StartCoroutine(Salto());
                     break; 
                 
                 case 3:
@@ -82,6 +90,12 @@ public class JefeConejo : MonoBehaviour
             transform.localScale = new Vector3(-TamañoBase.x, TamañoBase.y, 1);
         else if (movimiento.x < 0)
             transform.localScale = new Vector3(TamañoBase.x, TamañoBase.y, 1);
+        if (Saltando == true)
+        {
+            rb.AddForce(new Vector2(0, fuerzaSalto), ForceMode2D.Impulse);
+            Saltando = false;
+        }
+
     }
 
     public void EstarQuieto()
@@ -104,6 +118,36 @@ public class JefeConejo : MonoBehaviour
         yield return new WaitForSeconds(tiempo);
         Accionando = false;
     }
+
+    IEnumerator Salto()
+    {
+        Vector2 PosiciónCaida = new Vector2(Random.Range(-16, 22), -0);
+        Saltando = true;
+        yield return new WaitForSeconds(1f);
+        if (gameObject.transform.position.y > 17.33)
+        {
+            rb.gravityScale = 0;
+            rb.velocity = Vector3.zero;
+            yield return new WaitForSeconds(1);
+           
+        }
+
+        this.gameObject.transform.position = new Vector3(PosiciónCaida.x, 34);
+       
+
+
+        IconoAdvertenciaSalto.SetActive(true);
+        IconoAdvertenciaSalto.transform.position = PosiciónCaida;
+
+        yield return new WaitForSeconds(3);
+        IconoAdvertenciaSalto.SetActive(false);
+        rb.gravityScale = GravedadBase;
+        yield return new WaitForSeconds(1);
+        StartCoroutine (Cooldown());
+
+    }
+
+    
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
