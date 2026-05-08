@@ -8377,6 +8377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fe553d8291e75e48955b157c98b1966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Puntohuida: {fileID: 226943545}
   "da\xF1o": 0
   acciones: 0
   velocidad: 17
@@ -8385,7 +8386,9 @@ MonoBehaviour:
   Accionando: 0
   chasing: 0
   Saltando: 0
+  Huyendo: 0
   "Posici\xF3nCaida": {x: 0, y: 0}
+  ZanahoriaProjectile: {fileID: 7457870755163713579, guid: 2541339830813984c969b02de621768b, type: 3}
 --- !u!1 &2095683469
 GameObject:
   m_ObjectHideFlags: 0

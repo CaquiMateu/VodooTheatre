@@ -5,6 +5,7 @@ using UnityEngine;
 public class JefeConejo : MonoBehaviour
 {
    Transform jugador;
+    public Transform Puntohuida;
     public int daño;
     public int acciones;
     public float velocidad = 4;
@@ -15,10 +16,13 @@ public class JefeConejo : MonoBehaviour
     public bool Accionando = false;
     public bool chasing = false;
     public bool Saltando = false;
+    public bool Huyendo = false;
     Vector2 movimiento;
     Vector2 TamañoBase;
     public Vector2 PosiciónCaida;
     float GravedadBase;
+    public GameObject ZanahoriaProjectile;
+    float CarrotSpeed = 5;
 
 
     void Start()
@@ -58,7 +62,7 @@ public class JefeConejo : MonoBehaviour
                     break; 
                 
                 case 3:
-                    StartCoroutine(Cooldown());
+                    StartCoroutine(AtaqueZanahorias());
                     break; 
                 
                 case 4:
@@ -70,15 +74,26 @@ public class JefeConejo : MonoBehaviour
                     break;
             }
         }
-        // Calcula dirección sin mover verticalmente
-        Vector3 direccion = jugador.position - transform.position;
-        direccion.Normalize();
-        movimiento = new Vector2(direccion.x, 0); // Solo eje X para terrestre
+
+        if (Huyendo == false)
+        {
+            // Calcula dirección sin mover verticalmente
+            Vector3 direccion = jugador.position - transform.position;
+            direccion.Normalize();
+            movimiento = new Vector2(direccion.x, 0); // Solo eje X para terrestre
+        }
+        else
+        {
+            Vector3 direccion = Puntohuida.position - transform.position;
+            direccion.Normalize();
+            movimiento = new Vector2(direccion.x, 0); // Solo eje X para terrestre
+        }
+       
     }
 
     void FixedUpdate()
     {
-        if (jugador != null && chasing == true)
+        if (jugador != null && chasing == true || Huyendo == true)
         {
             // Mueve al enemigo
             rb.velocity = new Vector2(movimiento.x * velocidad, rb.velocity.y);
@@ -145,6 +160,28 @@ public class JefeConejo : MonoBehaviour
         yield return new WaitForSeconds(1);
         StartCoroutine (Cooldown());
 
+    }
+
+    IEnumerator AtaqueZanahorias()
+    {
+        Huyendo = true;
+        yield return new WaitForSeconds(1.5f);
+        int NumTandas = Random.Range(2, 5);
+        for (int i = 0; i < NumTandas; i++) 
+        { 
+          int numDeZanahorias = Random.Range(4, 7);
+            for (int j = 0; j < numDeZanahorias; j++)
+            {
+                float Y = Random.Range(-0.6f, 9.25f);
+                GameObject Projectil =Instantiate(ZanahoriaProjectile, new Vector2(Puntohuida.position.x, Y), Quaternion.identity);
+                Rigidbody2D rb2 = Projectil.GetComponent<Rigidbody2D>();
+                rb2.AddForce(new Vector2(0, CarrotSpeed));
+                yield return new WaitForSeconds(Random.Range(0.3f, 0.5f));
+            }
+        }
+        Huyendo = false;
+        StartCoroutine (Chase());
+        StartCoroutine (Cooldown());
     }
 
     
