@@ -4098,7 +4098,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 16.5, y: -1.838, z: 0}
-  m_LocalScale: {x: 22.366646, y: 7.6912208, z: 1}
+  m_LocalScale: {x: 22.366646, y: 7.691221, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2039336509}
@@ -7904,6 +7904,7 @@ GameObject:
   - component: {fileID: 2039336505}
   - component: {fileID: 2039336510}
   - component: {fileID: 2039336511}
+  - component: {fileID: 2039336512}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -7930,8 +7931,8 @@ MonoBehaviour:
   direccion: 0
   "Aceleraci\xF3n": 10
   moving: 0
-  FuerzaDash: 24.8
-  TiempoDash: 0.16
+  FuerzaDash: 31.3
+  TiempoDash: 0.2
   Atacking: 0
   MeleeAttackRangeDown: {fileID: 1920331129}
   MeleeAttackRange: {fileID: 2095683469}
@@ -7946,7 +7947,7 @@ MonoBehaviour:
   angle: 0
   Disparando: 0
   rb: {fileID: 2039336507}
-  GroundCheckPosition: {x: -0.03, y: -1.54, z: 0}
+  GroundCheckPosition: {x: -0.01, y: -1.1, z: 0}
   GroundCheckSize: {x: 1.73, y: 0.31}
   GroundLayer:
     serializedVersion: 2
@@ -7986,7 +7987,7 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 2.23}
   m_Size: {x: 9.27, y: 15.3}
   m_Direction: 0
 --- !u!50 &2039336507
@@ -8198,6 +8199,28 @@ MonoBehaviour:
   currentHealth: 0
   MaxHealth: 3
   healthIconLayout: {fileID: 1826827252}
+  IsDead: 0
+--- !u!95 &2039336512
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039336504}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3aa642ffffe45f1428eadfa49b5f3340, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2046071176
 GameObject:
   m_ObjectHideFlags: 0
@@ -8218,7 +8241,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &2046071177
 Rigidbody2D:
   serializedVersion: 4
@@ -8515,7 +8538,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 13.9, y: -3.2, z: 0}
-  m_LocalScale: {x: 18.817802, y: 7.7424183, z: 2.5026}
+  m_LocalScale: {x: 18.817802, y: 7.742418, z: 2.5026}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2039336509}

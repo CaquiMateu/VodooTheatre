@@ -10,14 +10,20 @@ public class PlayerHealth : MonoBehaviour
     public int currentHealth = 0;
     public int MaxHealth = 3;
     public Transform healthIconLayout;
+    Animator animator;
+    public bool IsDead = false;
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         currentHealth = MaxHealth;
     }
     private void Update()
     {
-       
+       if (IsDead == true && Input.GetKeyDown(KeyCode.R))
+        {
+            Respawn();
+        }
     }
 
 
@@ -33,7 +39,7 @@ public class PlayerHealth : MonoBehaviour
             {
                 currentHealth = 0;
                 Debug.Log("Fallesí");
-                Respawn();
+                Muerte();
             }
             UpdateHealIcons();
             StartCoroutine(InvulnerableTimer());
@@ -73,6 +79,12 @@ public class PlayerHealth : MonoBehaviour
                 healthIconLayout.GetChild(i).gameObject.SetActive(true);
             }
         }
+    }
+
+    public void Muerte()
+    {
+        animator.SetBool("IsDead", true);
+        IsDead = true;
     }
 
     public void Respawn()

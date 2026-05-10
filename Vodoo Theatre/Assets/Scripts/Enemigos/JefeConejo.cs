@@ -174,14 +174,12 @@ public class JefeConejo : MonoBehaviour
             {
                 float Y = Random.Range(-0.6f, 9.25f);
                 GameObject Projectil =Instantiate(ZanahoriaProjectile, new Vector2(Puntohuida.position.x, Y), Quaternion.identity);
-                Rigidbody2D rb2 = Projectil.GetComponent<Rigidbody2D>();
-                rb2.AddForce(new Vector2(0, CarrotSpeed));
-                yield return new WaitForSeconds(Random.Range(0.3f, 0.5f));
+                yield return new WaitForSeconds(Random.Range(0.93f, 1.2f));
             }
         }
         Huyendo = false;
         StartCoroutine (Chase());
-        StartCoroutine (Cooldown());
+        
     }
 
     

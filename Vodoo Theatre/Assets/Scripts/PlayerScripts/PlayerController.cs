@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour
     [Header ("Otros Códigos")]
 
     public InteractTrigger InteractTrigger;
-   
+    PlayerHealth playerHealth;
+
 
     [Header ("Valores Movimiento")]
 
@@ -71,6 +72,7 @@ public class PlayerController : MonoBehaviour
 
     //Variables Privadas
     float input;
+    Animator animator;
 
     #endregion
     
@@ -79,13 +81,44 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         TamañoBase = transform.localScale;
         direccion = 1;
+        animator = GetComponent<Animator>();
+        playerHealth = GetComponent<PlayerHealth>();
     }
 
 
     void Update()
     {
+        if (playerHealth.IsDead == true)
+        {
+            return;
+        }
         GroundChecker();
         MoveChecker();
+
+        if (IsGrounded == false)
+        {
+            animator.SetBool("Landing", false);
+            if (rb.velocity.y > 0.1f)
+            {
+                animator.SetBool("Jumping", true);
+            }
+            else if (rb.velocity.y < -0.1f)
+            {
+                animator.SetBool("Falling", true);
+                animator.SetBool("Jumping", false);
+            }
+            
+        }
+
+        else if (IsGrounded == true)
+        {
+            Debug.Log("En el suelo");
+            animator.SetBool("Falling", false);
+            animator.SetBool("Landing", true);
+            
+        }
+        
+
         if (InteractTrigger.hablando == false)
         {
             #region Rotación Brazo
@@ -190,19 +223,20 @@ public class PlayerController : MonoBehaviour
             {
                 Cargando = true;
                 CargeTime -= 1 * Time.deltaTime;
-                if (CargeTime <= 0)
-                {
-                    if (direccion == -1)
-                    {
-                        rb.transform.localScale = new Vector3(TamañoBase.x * direccion, TamañoBase.y, 0) - new Vector3(0.05f, -0.05f, 0);
-                    }
-                    else
-                    {
-                        rb.transform.localScale = TamañoBase + new Vector3(0.05f * direccion, 0.05f * direccion, 0);
-                    }
+                animator.SetBool("Charging", true);
+                //if (CargeTime <= 0)
+                //{
+                //    if (direccion == -1)
+                //    {
+                //        rb.transform.localScale = new Vector3(TamañoBase.x * direccion, TamañoBase.y, 0) - new Vector3(0.05f, -0.05f, 0);
+                //    }
+                //    else
+                //    {
+                //        rb.transform.localScale = TamañoBase + new Vector3(0.05f * direccion, 0.05f * direccion, 0);
+                //    }
 
 
-                }
+                //}
 
 
             }
@@ -210,7 +244,9 @@ public class PlayerController : MonoBehaviour
             {
                 CargeTime = 1.5f;
                 Atacking = true;
-                MeleeAttackRange.gameObject.SetActive(true);
+                animator.SetBool("Charging", false);
+                animator.SetBool("AtacandoAnim", true);
+
                 Invoke("cesaAtaque", 0.1f);
 
             }
@@ -220,7 +256,8 @@ public class PlayerController : MonoBehaviour
             {
                 CargeTime = 1.5f;
                 Atacking = true;
-                MeleeAttackRangeCharged.gameObject.SetActive(true);
+                animator.SetBool("Charging", false);
+                animator.SetBool("StrongAttack", true);
                 Invoke("cesaAtaque", 0.2f);
             }
 
@@ -247,6 +284,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.LeftShift) && Dashing == false && Aiming == false && Atacking == false && DashOnCooldown == false)
             {
                 Dashing = true;
+                animator.SetBool("DashingAnim", true);
 
                 rb.AddForce(new Vector2(direccion, 0) * FuerzaDash, ForceMode2D.Impulse);
 
@@ -265,6 +303,7 @@ public class PlayerController : MonoBehaviour
         
         DashOnCooldown = true;
         Dashing = false;
+        animator.SetBool("DashingAnim", false);
         StartCoroutine(DashCooldownCrt());
     }
     //Cooldown del Dash
@@ -277,6 +316,10 @@ public class PlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
+        if (playerHealth.IsDead == true)
+        {
+            return;
+        }
         //Movimiento nuevo
         if (Aiming == false && Dashing == false)
         {
@@ -284,6 +327,7 @@ public class PlayerController : MonoBehaviour
             float MaxSpeed = input * Movespeed;
             float SpeedToApply = MaxSpeed - rb.velocity.x;
             rb.AddForce(new Vector2(SpeedToApply * Aceleración, 0));
+            
         }
         else if (Dashing == false)
         {
@@ -302,6 +346,7 @@ public class PlayerController : MonoBehaviour
         {
             IsGrounded = true;
             
+
         }
 
         else
@@ -314,19 +359,32 @@ public class PlayerController : MonoBehaviour
     //Detecta si está en movimiento
     void MoveChecker()
     {
+        bool Antiloop = false;
         if (Input.GetKey(KeyCode.A)|| Input.GetKey(KeyCode.D)||Input.GetKey(KeyCode.RightArrow)|| Input.GetKey(KeyCode.LeftArrow))
         {
+           
             moving = true;
+            if (IsGrounded == true && Antiloop == false)
+            {
+                Antiloop = true;
+                animator.SetBool("WalkingAnim", true);
+            }
+
         }
         else
         {
             moving = false;
+            animator.SetBool("WalkingAnim", false);
+            Antiloop = false;
+
         }
     }
 
     //Se llama cada vez que se termina de atacar y añade knockback 
     void cesaAtaque()
     {
+        animator.SetBool("StrongAttack", false);  
+        animator.SetBool("AtacandoAnim", false);
         if (direccion < 0)
         {
             rb.AddForce(new Vector2 (20, 0), ForceMode2D.Impulse);
@@ -346,7 +404,7 @@ public class PlayerController : MonoBehaviour
     //Cooldown del Ataque  
     IEnumerator Cooldown()
     {
-        MeleeAttackRange.gameObject.SetActive(false);
+       
         MeleeAttackRangeDown.gameObject.SetActive(false);
         MeleeAttackRangeCharged.gameObject.SetActive(false);
         yield return new WaitForSeconds(0.13f);

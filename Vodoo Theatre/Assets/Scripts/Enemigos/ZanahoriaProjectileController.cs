@@ -12,14 +12,22 @@ public class ZanahoriaProjectileController : MonoBehaviour
     {
 
         rb = GetComponent<Rigidbody2D>();
-       
+        rb.AddForce(new Vector2(-Speed, 0), ForceMode2D.Impulse);
+        StartCoroutine(DestroyProjectile());
     }
 
-    // Update is called once per frame
-    void Update()
+   IEnumerator DestroyProjectile()
     {
-
-        rb.transform.position += new Vector2(-rb.position.x * Speed, 0);
-
+        yield return new WaitForSeconds(4);
+        Destroy(this.gameObject);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            collision.GetComponent<PlayerHealth>().PerderVida(0);
+            Destroy(this.gameObject);
+        }
+       
     }
 }
