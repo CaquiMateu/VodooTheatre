@@ -12,6 +12,7 @@ public class SpawnEnemigos : MonoBehaviour
 
     [Header("Tipos De Enemigos")]
     public GameObject[] Enemigos;
+    public JefeConejo ConejoBoss;
 
     [Header("Valores Del Spawn")]
     public float TiempoEntreSpawn;
@@ -30,7 +31,7 @@ public class SpawnEnemigos : MonoBehaviour
     public float FactorDeCrecimientoLineal = 1.5f;
     public float FactorDeCrecimientoExponencial = 0.01f;
     public float exponente = 0.5f; 
-    bool BossFight= false;
+    public bool BossFight= false;
 
     void Start()
     {
@@ -62,7 +63,7 @@ public class SpawnEnemigos : MonoBehaviour
 
     public void NumSpawnDificultad()
     {
-        if (NumeroDeHorda == 2)
+        if (NumeroDeHorda == 5)
         {
             BossFight = true;
         }
@@ -81,6 +82,12 @@ public class SpawnEnemigos : MonoBehaviour
                 CantidadDeEnemigosPorHorda = EnemigosBase + (FactorDeCrecimientoLineal * NumeroDeHorda) + FactorDeCrecimientoExponencial * Mathf.Pow(NumeroDeHorda, exponente);
                 CantidadDeEnemigosPorHorda = Mathf.RoundToInt(CantidadDeEnemigosPorHorda);
             }
+        }
+        else if (BossFight == true)
+        {
+            CantidadDeEnemigosPorHorda = 0;
+            Instantiate(ConejoBoss.gameObject, new Vector2(10.7f, 18.1f), Quaternion.identity);
+
         }
        
     }

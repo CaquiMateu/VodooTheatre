@@ -11,6 +11,8 @@ public class JefeConejo : MonoBehaviour
     public float velocidad = 4;
     public float fuerzaSalto;
     public GameObject IconoAdvertenciaSalto;
+    public FuegoController Fuego;
+    
     Rigidbody2D rb;
     bool INvunerable = false;
     public bool Accionando = false;
@@ -24,13 +26,23 @@ public class JefeConejo : MonoBehaviour
     public GameObject ZanahoriaProjectile;
     float CarrotSpeed = 5;
 
-
-    void Start()
+    private void Awake()
     {
+        Fuego = GameObject.Find("Fuego").GetComponent<FuegoController>();
+        IconoAdvertenciaSalto = GameObject.Find("IconoExclamación");
+        GameObject Spawn2 = GameObject.Find("Zona 2");
+        Puntohuida = Spawn2.transform;
         jugador = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
         GravedadBase = rb.gravityScale;
         TamañoBase = this.gameObject.transform.localScale;
+    }
+    void Start()
+    {
+       if (Puntohuida == null)
+        {
+            Debug.Log("Falta");
+        }
     }
 
    
@@ -66,11 +78,11 @@ public class JefeConejo : MonoBehaviour
                     break; 
                 
                 case 4:
-                    StartCoroutine(Cooldown());
+                    StartCoroutine(AtaqueFuego());
                     break; 
                 
                 case 5:
-                    StartCoroutine(Cooldown());
+                    StartCoroutine(SaltoDirigido());
                     break;
             }
         }
@@ -182,8 +194,46 @@ public class JefeConejo : MonoBehaviour
         
     }
 
-    
-    
+    IEnumerator AtaqueFuego()
+    {
+        SpriteRenderer FuegoSprite = Fuego.GetComponent<SpriteRenderer>();
+        FuegoSprite.GetComponent<SpriteRenderer>().enabled = true;
+        Fuego.t = 0;
+        yield return new WaitUntil(() => Fuego.t >= 1);
+        Collider2D FuegoCollider = Fuego.GetComponent<Collider2D>();
+        FuegoCollider.enabled = true;
+        yield return new WaitForSeconds (0.5f);
+        FuegoCollider.enabled= false;
+        Fuego.t = 0;
+        FuegoSprite.enabled = false;
+        StartCoroutine(Cooldown());
+    }
+
+    IEnumerator SaltoDirigido()
+    {
+        Vector2 PosiciónCaida = jugador.position;
+        Saltando = true;
+        yield return new WaitForSeconds(1f);
+        if (gameObject.transform.position.y > 17.33)
+        {
+            rb.gravityScale = 0;
+            rb.velocity = Vector3.zero;
+            yield return new WaitForSeconds(1);
+
+        }
+
+        this.gameObject.transform.position = new Vector3(PosiciónCaida.x, 34);
+
+
+        PosiciónCaida = jugador.position;
+       
+        rb.gravityScale = GravedadBase;
+        yield return new WaitForSeconds(1);
+        StartCoroutine(Cooldown());
+
+    }
+
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
