@@ -56,14 +56,20 @@ public class SpawnEnemigos : MonoBehaviour
             GameManger.CambioDeEscenarioANoche();
 
         }
-        
+
+        if (BossFight==true && GameObject.FindGameObjectsWithTag("Enemigo").Length== 0)
+        {
+           BossFight = false;
             
-        
+        }
+
+
+
     }
 
     public void NumSpawnDificultad()
     {
-        if (NumeroDeHorda == 5)
+        if (NumeroDeHorda == 3)
         {
             BossFight = true;
         }
