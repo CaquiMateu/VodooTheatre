@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     public float CargeTime = 1.5f;
     public int DañoAtaque = 1;
     public int DañoAtaqueCargado = 3;
-    bool Cargando = false;
+    public bool Cargando = false;
 
     [Header ("Valores Ataque Distancia")]
 
@@ -115,9 +115,15 @@ public class PlayerController : MonoBehaviour
             Debug.Log("En el suelo");
             animator.SetBool("Falling", false);
             animator.SetBool("Landing", true);
+
+           
             
         }
-        
+       if (Cargando == false && Input.GetMouseButtonDown(0) == false)
+        {
+            animator.SetBool("Charging", false);
+        }
+
 
         if (InteractTrigger.hablando == false)
         {
