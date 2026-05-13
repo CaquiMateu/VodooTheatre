@@ -25,7 +25,7 @@ public class ZanahoriaProjectileController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<PlayerHealth>().PerderVida(0);
+            collision.GetComponent<PlayerHealth>().PerderVida(1);
             Destroy(this.gameObject);
         }
        

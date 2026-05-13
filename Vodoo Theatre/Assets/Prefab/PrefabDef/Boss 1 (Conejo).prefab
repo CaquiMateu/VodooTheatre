@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4430794568725494195}
   - component: {fileID: 7090464886500343777}
   - component: {fileID: 238736312032758225}
+  - component: {fileID: -8132664997819733237}
   m_Layer: 9
   m_Name: Boss 1 (Conejo)
   m_TagString: Enemigo
@@ -120,8 +121,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.33}
-  m_Size: {x: 1, y: 2}
+  m_Offset: {x: 0, y: -0.18}
+  m_Size: {x: 1.06, y: 1.88}
   m_Direction: 0
 --- !u!50 &4430794568725494195
 Rigidbody2D:
@@ -180,7 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Puntohuida: {fileID: 0}
-  "da\xF1o": 0
+  "da\xF1o": 1
   acciones: 0
   velocidad: 17
   fuerzaSalto: 2982
@@ -192,3 +193,24 @@ MonoBehaviour:
   Huyendo: 0
   "Posici\xF3nCaida": {x: 0, y: 0}
   ZanahoriaProjectile: {fileID: 7457870755163713579, guid: 2541339830813984c969b02de621768b, type: 3}
+--- !u!95 &-8132664997819733237
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5953380838143333724}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 36017b59c89d18a4f9d13ea47b484db9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

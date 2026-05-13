@@ -263,20 +263,20 @@ public class PlayerController : MonoBehaviour
 
 
 
-            //Ataque Hacia Abajo
-            if (Input.GetKey(KeyCode.S) && Aiming == false && GameObject.FindGameObjectWithTag("Ataque") == false && Dashing == false && IsGrounded == false && Atacking == false)
-            {
-                if (Input.GetMouseButtonUp(0))
-                {
-                    Atacking = true;
-                    MeleeAttackRangeDown.gameObject.SetActive(true);
-                    Invoke("cesaAtaque", 0.2f);
+            ////Ataque Hacia Abajo
+            //if (Input.GetKey(KeyCode.S) && Aiming == false && GameObject.FindGameObjectWithTag("Ataque") == false && Dashing == false && IsGrounded == false && Atacking == false)
+            //{
+            //    if (Input.GetMouseButtonUp(0))
+            //    {
+            //        Atacking = true;
+            //        MeleeAttackRangeDown.gameObject.SetActive(true);
+            //        Invoke("cesaAtaque", 0.2f);
 
 
-                }
+            //    }
 
 
-            }
+            //}
 
             #endregion
             #region Dash

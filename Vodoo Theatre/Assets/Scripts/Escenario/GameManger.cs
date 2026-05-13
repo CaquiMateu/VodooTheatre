@@ -13,6 +13,7 @@ public class GameManger : MonoBehaviour
    public Foco Foco;
    public Collider2D CámaraDía;
    public Collider2D CámaraNoche;
+    public PlayerHealth playerHealth;
     private void Start()
     {
         CambioDecámara(CámaraDía);
@@ -31,7 +32,8 @@ public class GameManger : MonoBehaviour
         PlayerController.CambioDeZonaANoche();
         Foco.EnOscuridad();
         CambioDecámara(CámaraNoche);
-        TiendaManager.ActivarTienda();
+        
+       
     }
 
     
