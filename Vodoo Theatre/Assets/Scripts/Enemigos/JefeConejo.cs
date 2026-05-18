@@ -215,16 +215,24 @@ public class JefeConejo : MonoBehaviour
 
     IEnumerator AtaqueFuego()
     {
+        animator.SetBool("Fire", true);
+        
         SpriteRenderer FuegoSprite = Fuego.GetComponent<SpriteRenderer>();
+        Animator FuegoAnimator = Fuego.GetComponent<Animator>();
+        FuegoAnimator.enabled = true;
         FuegoSprite.GetComponent<SpriteRenderer>().enabled = true;
         Fuego.t = 0;
         yield return new WaitUntil(() => Fuego.t >= 1);
         Collider2D FuegoCollider = Fuego.GetComponent<Collider2D>();
         FuegoCollider.enabled = true;
+        animator.SetBool("Fire", false);
         yield return new WaitForSeconds (0.5f);
+        FuegoAnimator.enabled = false;
         FuegoCollider.enabled= false;
         Fuego.t = 0;
         FuegoSprite.enabled = false;
+        
+        
         StartCoroutine(Cooldown());
     }
 

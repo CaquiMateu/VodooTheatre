@@ -30,7 +30,7 @@ public class GameManger : MonoBehaviour
     public void CambioDeEscenarioANoche()
     {
         PlayerController.CambioDeZonaANoche();
-        Foco.EnOscuridad();
+        
         CambioDecámara(CámaraNoche);
         
        
@@ -41,7 +41,7 @@ public class GameManger : MonoBehaviour
     {
        
         PlayerController.CambioDeZonaADia();
-        Foco.EnLuz();
+        
         CambioDecámara(CámaraDía);
         SpawnEnemigos.NumSpawnDificultad();
         SpawnEnemigos.HordaAcabada = false;
