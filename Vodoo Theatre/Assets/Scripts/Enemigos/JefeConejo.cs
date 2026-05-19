@@ -12,6 +12,7 @@ public class JefeConejo : MonoBehaviour
     public float fuerzaSalto;
     public GameObject IconoAdvertenciaSalto;
     public FuegoController Fuego;
+    EnemyHeal enemyHeal;
     
     Rigidbody2D rb;
     bool INvunerable = false;
@@ -38,6 +39,7 @@ public class JefeConejo : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         GravedadBase = rb.gravityScale;
         TamañoBase = this.gameObject.transform.localScale;
+        enemyHeal = GetComponent<EnemyHeal>();
     }
     void Start()
     {
@@ -48,6 +50,9 @@ public class JefeConejo : MonoBehaviour
    
     void Update()
     {
+
+        if (enemyHeal.IsDead == true) return;
+
         if (Accionando == false)
         {
             Accionando = true;

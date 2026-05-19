@@ -13,17 +13,26 @@ public class PlayerHealth : MonoBehaviour
     Animator animator;
     public bool IsDead = false;
 
+
     void Start()
     {
         animator = GetComponent<Animator>();
         currentHealth = MaxHealth;
+        gameObject.layer = LayerMask.NameToLayer("Player");
     }
     private void Update()
     {
-       if (IsDead == true && Input.GetKeyDown(KeyCode.R))
+        if ( IsDead == true)
+        {
+            gameObject.layer = LayerMask.NameToLayer("Invunerable");
+           
+        }
+        if (IsDead == true && Input.GetKeyDown(KeyCode.R))
         {
             Respawn();
         }
+
+       
     }
 
 
@@ -34,6 +43,7 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth != 0)
         {
             currentHealth -= Damage;
+
 
             if (currentHealth <= 0)
             {
@@ -50,12 +60,16 @@ public class PlayerHealth : MonoBehaviour
     IEnumerator InvulnerableTimer()
     {
         esInvulnerable = true;
+        Time.timeScale = 0.1f;
         gameObject.layer = LayerMask.NameToLayer("Invunerable");
         GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(0.03f);
+        GetComponent<SpriteRenderer>().color = Color.white;
+        Time.timeScale = 1;
         yield return new WaitForSeconds(InvulTime);
         esInvulnerable = false;
         gameObject.layer = LayerMask.NameToLayer("Player");
-        GetComponent<SpriteRenderer>().color = Color.white;
+       
     }
 
     public void Heal(int health)

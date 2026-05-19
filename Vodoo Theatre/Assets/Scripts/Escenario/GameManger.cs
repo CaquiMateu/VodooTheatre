@@ -17,6 +17,7 @@ public class GameManger : MonoBehaviour
     private void Start()
     {
         CambioDecámara(CámaraDía);
+        Time.timeScale = 1.0f;
     }
     public void CambioDecámara(Collider2D NewCofinder)
     {

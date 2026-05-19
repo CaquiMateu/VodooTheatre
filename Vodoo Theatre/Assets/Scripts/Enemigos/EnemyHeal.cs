@@ -6,19 +6,24 @@ public class EnemyHeal : MonoBehaviour
 {
     public int VidaEnemigo = 25;
     public bool Golpeado = false;
+    public bool boss;
 
     private PlayerHealth PlayerHealth;
     public ProjectileController ProjectilDaño;
     public PlayerController DañoAtaque;
     public PlayerController DañoAtaqueCargado;
+    SpriteRenderer sprite;
+    Animator animator;
+    public bool IsDead = false;
 
     void Start()
     {
         GameObject Player = GameObject.FindWithTag("Player");
         DañoAtaque = Player.GetComponent<PlayerController>();
         DañoAtaqueCargado = Player.GetComponent<PlayerController>();
-        
-      
+        sprite = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -31,12 +36,10 @@ public class EnemyHeal : MonoBehaviour
             }
              
             VidaEnemigo -= ProjectilDaño.DañoBala;
-           
+            StartCoroutine(DamageEffect());
 
-            if (VidaEnemigo <= 0)
-            {
-                Destroy(this.gameObject);
-            }
+
+           
         }
 
         else if (collision.CompareTag("Ataque"))
@@ -47,11 +50,9 @@ public class EnemyHeal : MonoBehaviour
             }
 
             VidaEnemigo -= DañoAtaque.DañoAtaque;
+            StartCoroutine(DamageEffect());
 
-            if (VidaEnemigo <= 0)
-            {
-                Destroy(this.gameObject);
-            }
+           
         }
 
         else if (collision.CompareTag("Ataque Cargado"))
@@ -62,11 +63,41 @@ public class EnemyHeal : MonoBehaviour
             }
 
             VidaEnemigo -= DañoAtaqueCargado.DañoAtaqueCargado;
+            StartCoroutine(DamageEffect());
 
+           
+        }
+
+       
+    }
+    IEnumerator DamageEffect()
+    {
+       
+        Time.timeScale = 0.1f;
+        sprite.color = Color.red;
+        yield return new WaitForSeconds(0.01f);
+        sprite.color = Color.white;
+        Time.timeScale = 1;
+
+        if (boss == false)
+        {
             if (VidaEnemigo <= 0)
             {
                 Destroy(this.gameObject);
-            }
+            } 
+           
+        }
+
+        else 
+        {
+            if (VidaEnemigo <= 0)
+            {
+                IsDead = true;
+                animator.SetBool("Muerte", true);
+                yield return new WaitForSeconds(7);
+                Destroy(this.gameObject);
+
+            } 
         }
     }
 }

@@ -165,6 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VidaEnemigo: 40
   Golpeado: 0
+  boss: 1
   "ProjectilDa\xF1o": {fileID: -7656072905679353696, guid: ea234428e01a90343bc08bbe530b8191, type: 3}
   "Da\xF1oAtaque": {fileID: 0}
   "Da\xF1oAtaqueCargado": {fileID: 0}
