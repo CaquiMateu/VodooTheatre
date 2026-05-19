@@ -18,6 +18,7 @@ public class ProjectileController : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(VidaBala());
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody2D>();
         SpawnSound.Play();
@@ -47,10 +48,7 @@ public class ProjectileController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerController != null) 
-        {
-            Debug.Log("CodigoRecibido");
-        }
+       
 
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -76,5 +74,10 @@ public class ProjectileController : MonoBehaviour
         yield return new WaitForSeconds(Cooldown);
         playerController.Disparando = false;
         Destroy(gameObject);
+    }
+    IEnumerator VidaBala()
+    {
+        yield return new WaitForSeconds(2f);
+        playerController.Disparando = false;    
     }
 }

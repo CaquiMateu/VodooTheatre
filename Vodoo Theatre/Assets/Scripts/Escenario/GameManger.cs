@@ -30,9 +30,10 @@ public class GameManger : MonoBehaviour
 
     public void CambioDeEscenarioANoche()
     {
-        PlayerController.CambioDeZonaANoche();
-        
+        PlayerController.CambioDeZonaANoche(); 
         CambioDecámara(CámaraNoche);
+        TiendaManager.ActivarTienda();
+       
         
        
     }
@@ -44,6 +45,7 @@ public class GameManger : MonoBehaviour
         PlayerController.CambioDeZonaADia();
         
         CambioDecámara(CámaraDía);
+        TiendaManager.DesactivarTienda();
         SpawnEnemigos.NumSpawnDificultad();
         SpawnEnemigos.HordaAcabada = false;
     }

@@ -13,7 +13,7 @@ public class EnemyHeal : MonoBehaviour
     public PlayerController DañoAtaque;
     public PlayerController DañoAtaqueCargado;
     SpriteRenderer sprite;
-    Animator animator;
+    public JefeConejo jefeConejo;
     public bool IsDead = false;
 
     void Start()
@@ -22,7 +22,7 @@ public class EnemyHeal : MonoBehaviour
         DañoAtaque = Player.GetComponent<PlayerController>();
         DañoAtaqueCargado = Player.GetComponent<PlayerController>();
         sprite = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
+        jefeConejo = GetComponent<JefeConejo>();
 
     }
     public void OnTriggerEnter2D(Collider2D collision)
@@ -92,8 +92,16 @@ public class EnemyHeal : MonoBehaviour
         {
             if (VidaEnemigo <= 0)
             {
+                Debug.Log("Boss Muerto");
                 IsDead = true;
-                animator.SetBool("Muerte", true);
+                jefeConejo.animator.SetBool("Muerte", true);
+                yield return new WaitForSeconds(0.1f);
+                jefeConejo.animator.SetBool("Muerte", false);
+                Time.timeScale = 0.3f;
+                yield return new WaitForSeconds(0.5f);
+                Time.timeScale = 1;
+               
+                
                 yield return new WaitForSeconds(7);
                 Destroy(this.gameObject);
 

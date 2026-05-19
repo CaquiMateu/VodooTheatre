@@ -11,6 +11,7 @@ TagManager:
   - Enemigo
   - Hablar
   - Fuego
+  - ObjTienda
   layers:
   - Default
   - TransparentFX
@@ -53,6 +54,9 @@ TagManager:
     locked: 0
   - name: Objetos
     uniqueID: 867214577
+    locked: 0
+  - name: Tienda
+    uniqueID: 700913455
     locked: 0
   - name: Player
     uniqueID: 2332769311

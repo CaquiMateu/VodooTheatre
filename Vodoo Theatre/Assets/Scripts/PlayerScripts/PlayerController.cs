@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
 
         else if (IsGrounded == true)
         {
-            Debug.Log("En el suelo");
+           
             animator.SetBool("Falling", false);
             animator.SetBool("Landing", true);
 
@@ -224,26 +224,14 @@ public class PlayerController : MonoBehaviour
             #endregion
             #region Ataque cuerpo a cuerpo
 
+            
             //Ataque Lateral
             if (Input.GetMouseButton(0) && Aiming == false && GameObject.FindGameObjectWithTag("Ataque") == false && Dashing == false && !Input.GetKey(KeyCode.S))
             {
                 Cargando = true;
                 CargeTime -= 1 * Time.deltaTime;
                 animator.SetBool("Charging", true);
-                //if (CargeTime <= 0)
-                //{
-                //    if (direccion == -1)
-                //    {
-                //        rb.transform.localScale = new Vector3(TamañoBase.x * direccion, TamañoBase.y, 0) - new Vector3(0.05f, -0.05f, 0);
-                //    }
-                //    else
-                //    {
-                //        rb.transform.localScale = TamañoBase + new Vector3(0.05f * direccion, 0.05f * direccion, 0);
-                //    }
-
-
-                //}
-
+               
 
             }
             else if (Input.GetMouseButtonUp(0) && CargeTime > 0 && !Input.GetKey(KeyCode.S) && Aiming == false && Dashing == false && GameObject.FindGameObjectWithTag("Ataque") == false && Atacking == false)
@@ -267,27 +255,10 @@ public class PlayerController : MonoBehaviour
                 Invoke("cesaAtaque", 0.2f);
             }
 
-
-
-            ////Ataque Hacia Abajo
-            //if (Input.GetKey(KeyCode.S) && Aiming == false && GameObject.FindGameObjectWithTag("Ataque") == false && Dashing == false && IsGrounded == false && Atacking == false)
-            //{
-            //    if (Input.GetMouseButtonUp(0))
-            //    {
-            //        Atacking = true;
-            //        MeleeAttackRangeDown.gameObject.SetActive(true);
-            //        Invoke("cesaAtaque", 0.2f);
-
-
-            //    }
-
-
-            //}
-
             #endregion
             #region Dash
 
-            if (Input.GetKeyDown(KeyCode.LeftShift) && Dashing == false && Aiming == false && Atacking == false && DashOnCooldown == false)
+            if (Input.GetKeyDown(KeyCode.LeftShift) && Dashing == false && Aiming == false && Atacking == false && DashOnCooldown == false && Cargando==false)
             {
                 Dashing = true;
                 animator.SetBool("DashingAnim", true);
@@ -301,6 +272,8 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+   
 
     //Fin Del Dash
     IEnumerator FinDashCrt()
@@ -327,7 +300,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         //Movimiento nuevo
-        if (Aiming == false && Dashing == false)
+        if (Aiming == false && Dashing == false && Cargando == false)
         {
 
             float MaxSpeed = input * Movespeed;
@@ -389,6 +362,7 @@ public class PlayerController : MonoBehaviour
     //Se llama cada vez que se termina de atacar y añade knockback 
     void cesaAtaque()
     {
+        Cargando = false;
         animator.SetBool("StrongAttack", false);  
         animator.SetBool("AtacandoAnim", false);
         if (direccion < 0)

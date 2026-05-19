@@ -26,7 +26,7 @@ public class JefeConejo : MonoBehaviour
     float GravedadBase;
     public GameObject ZanahoriaProjectile;
     float CarrotSpeed = 5;
-    Animator animator;
+    public Animator animator;
 
     private void Awake()
     {
@@ -55,6 +55,7 @@ public class JefeConejo : MonoBehaviour
 
         if (Accionando == false)
         {
+            if (enemyHeal.IsDead == true) return;
             Accionando = true;
 
             acciones = Random.Range(0, 6);
@@ -94,6 +95,8 @@ public class JefeConejo : MonoBehaviour
 
         if (Huyendo == false)
         {
+            if (enemyHeal.IsDead == true) return;
+
             // Calcula dirección sin mover verticalmente
             Vector3 direccion = jugador.position - transform.position;
             direccion.Normalize();
@@ -101,6 +104,8 @@ public class JefeConejo : MonoBehaviour
         }
         else
         {
+            if (enemyHeal.IsDead == true) return;
+
             Vector3 direccion = Puntohuida.position - transform.position;
             direccion.Normalize();
             movimiento = new Vector2(direccion.x, 0); // Solo eje X para terrestre
@@ -110,8 +115,12 @@ public class JefeConejo : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (enemyHeal.IsDead == true) return;
+
         if (jugador != null && chasing == true || Huyendo == true)
         {
+            if (enemyHeal.IsDead == true) return;
+
             // Mueve al enemigo
             rb.velocity = new Vector2(movimiento.x * velocidad, rb.velocity.y);
 
@@ -124,19 +133,26 @@ public class JefeConejo : MonoBehaviour
             transform.localScale = new Vector3(TamañoBase.x, TamañoBase.y, 1);
         if (Saltando == true)
         {
+            if (enemyHeal.IsDead == true) return;
+
             rb.AddForce(new Vector2(0, fuerzaSalto), ForceMode2D.Impulse);
             Saltando = false;
         }
+        if (enemyHeal.IsDead == true) return;
 
     }
 
     public void EstarQuieto()
     {
+        if (enemyHeal.IsDead == true) return;
+
+
         StartCoroutine(Cooldown());
     }
 
     IEnumerator Chase()
     {
+
         animator.SetBool("CarChase", true);
         yield return new WaitForSeconds(0.1f);
         animator.SetBool("CarChase", false);
@@ -208,9 +224,15 @@ public class JefeConejo : MonoBehaviour
           int numDeZanahorias = Random.Range(4, 7);
             for (int j = 0; j < numDeZanahorias; j++)
             {
-                float Y = Random.Range(-0.6f, 9.25f);
-                GameObject Projectil =Instantiate(ZanahoriaProjectile, new Vector2(Puntohuida.position.x, Y), Quaternion.Euler(new Vector3(0,0,-90)));
-                yield return new WaitForSeconds(Random.Range(0.93f, 1.2f));
+                if (enemyHeal.IsDead == true) StartCoroutine(Cooldown());
+
+                else
+                {
+                    float Y = Random.Range(-0.6f, 9.25f);
+                    GameObject Projectil = Instantiate(ZanahoriaProjectile, new Vector2(Puntohuida.position.x, Y), Quaternion.Euler(new Vector3(0, 0, -90)));
+                    yield return new WaitForSeconds(Random.Range(0.93f, 1.2f));
+                }
+                    
             }
         }
         Huyendo = false;
@@ -275,7 +297,7 @@ public class JefeConejo : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && enemyHeal.IsDead==false)
         {
             PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
             if (playerHealth != null)
