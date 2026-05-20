@@ -302,7 +302,7 @@ public class JefeConejo : MonoBehaviour
             PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                playerHealth.PerderVida(daño);
+                playerHealth.PerderVida(daño * playerHealth.MultiplicadorDeDaño);
             }
         }
     }

@@ -9,15 +9,20 @@ public class EnemigoVoladorController : MonoBehaviour
    public int daño = 1;
    public Rigidbody2D rb;
     private Vector2 movimiento;
+    EnemyHeal enemyHeal;
+    PlayerHealth playerHealth;
     void Start()
     {
         jugador = GameObject.FindGameObjectWithTag("Player").transform;
+        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
         rb = GetComponent<Rigidbody2D>();
+        enemyHeal = GetComponent<EnemyHeal>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (enemyHeal.IsDead == true) return;
         if (jugador != null)
         {
             // Calcula dirección sin mover verticalmente
@@ -29,6 +34,7 @@ public class EnemigoVoladorController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (enemyHeal.IsDead == true) return;
         if (jugador != null)
         {
             // Mueve al enemigo
@@ -36,21 +42,22 @@ public class EnemigoVoladorController : MonoBehaviour
 
             // Voltear el sprite según la dirección
             if (movimiento.x > 0)
-                transform.localScale = new Vector3(1, 1, 1);
-            else if (movimiento.x < 0)
                 transform.localScale = new Vector3(-1, 1, 1);
+            else if (movimiento.x < 0)
+                transform.localScale = new Vector3(1, 1, 1);
         }
     }
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
+          if (enemyHeal.IsDead == true) return;
             if (collision.gameObject.CompareTag("Player"))
             {
                 PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
                 if (playerHealth != null)
                 {
-                    playerHealth.PerderVida(daño);
+                    playerHealth.PerderVida(daño * playerHealth.MultiplicadorDeDaño);
                 }
             }
-    }
+        }
 }

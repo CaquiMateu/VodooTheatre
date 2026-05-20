@@ -11,6 +11,7 @@ public class GameManger : MonoBehaviour
    public SpawnEnemigos SpawnEnemigos;
    public CinemachineConfiner2D CinemachineConfiner2D;
    public Foco Foco;
+    public GameObject DecoraciónCorazones;
    public Collider2D CámaraDía;
    public Collider2D CámaraNoche;
     public PlayerHealth playerHealth;
@@ -18,6 +19,19 @@ public class GameManger : MonoBehaviour
     {
         CambioDecámara(CámaraDía);
         Time.timeScale = 1.0f;
+    }
+
+    private void Update()
+    {
+        if (playerHealth.currentHealth > 3)
+        {
+            DecoraciónCorazones.transform.localScale = new Vector3(4.24f, 2.31f, 0);
+        }
+        else
+        {
+            DecoraciónCorazones.transform.localScale = new Vector3(2.31f, 2.31f, 0);
+
+        }
     }
     public void CambioDecámara(Collider2D NewCofinder)
     {

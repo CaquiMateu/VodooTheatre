@@ -15,18 +15,24 @@ public class EnemyHeal : MonoBehaviour
     SpriteRenderer sprite;
     public JefeConejo jefeConejo;
     public bool IsDead = false;
+    Animator animator;
+    SpriteRenderer spriteRenderer;
+    Rigidbody2D rb;
 
     void Start()
     {
+       spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         GameObject Player = GameObject.FindWithTag("Player");
         DañoAtaque = Player.GetComponent<PlayerController>();
         DañoAtaqueCargado = Player.GetComponent<PlayerController>();
         sprite = GetComponent<SpriteRenderer>();
         jefeConejo = GetComponent<JefeConejo>();
-
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        if (IsDead == true) return;
         if (collision.CompareTag("Proyectil"))
         {
             Golpeado = true;
@@ -83,6 +89,23 @@ public class EnemyHeal : MonoBehaviour
         {
             if (VidaEnemigo <= 0)
             {
+                IsDead = true;
+                rb.gravityScale = 2.23f;
+                gameObject.layer = LayerMask.NameToLayer("Invunerable");
+                animator.SetBool("IsDead", true);
+                yield return new WaitForSeconds(0.1f);
+                animator.SetBool("IsDead", false);
+                yield return new WaitForSeconds(0.65f);
+                Color color = Color.white;
+                float alpha = 1;
+                while(alpha > 0)
+                {
+                    alpha -= Time.deltaTime;
+                    color.a = alpha;
+                    spriteRenderer.color = color;
+                    yield return null;
+                }
+
                 Destroy(this.gameObject);
             } 
            
@@ -92,7 +115,7 @@ public class EnemyHeal : MonoBehaviour
         {
             if (VidaEnemigo <= 0)
             {
-                Debug.Log("Boss Muerto");
+               
                 IsDead = true;
                 jefeConejo.animator.SetBool("Muerte", true);
                 yield return new WaitForSeconds(0.1f);

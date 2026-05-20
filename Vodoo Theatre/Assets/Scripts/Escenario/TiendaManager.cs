@@ -5,6 +5,7 @@ using UnityEngine.Rendering.Universal;
 
 public class TiendaManager : MonoBehaviour
 {
+    public ShopObj[] shopObj;
     public Transform[] Zonas;
     public GameObject[] Objetos;
     public GameObject[] SpawnTienda;
@@ -15,6 +16,7 @@ public class TiendaManager : MonoBehaviour
     public float currentIntensity;
     public AnimationCurve curve;
     public float intensidad;
+    public int Índice = 0;
 
     public void Start()
     {
@@ -25,8 +27,10 @@ public class TiendaManager : MonoBehaviour
     {
         for (int i = 0; i < Zonas.Length; i++)
         {
+            shopObj[i].ActivarCollider();
             int tipodeobjeto = Random.Range(0, Objetos.Length);
             SpawnTienda[i] = Instantiate(Objetos[tipodeobjeto], Zonas[i].position, Quaternion.identity);
+            shopObj[i].ObjetoDeLaZona = SpawnTienda[i].gameObject;
         }
         TiendaActiva = true;
     }
@@ -36,9 +40,11 @@ public class TiendaManager : MonoBehaviour
         {
             if (SpawnTienda[i] != null)
             {
+                shopObj[i].DesactivarCollider();
                 Destroy(SpawnTienda[i]);
             }
         }
+        
         TiendaActiva = false;
     }
 

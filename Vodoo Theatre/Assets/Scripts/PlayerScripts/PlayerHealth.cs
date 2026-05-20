@@ -12,7 +12,7 @@ public class PlayerHealth : MonoBehaviour
     public Transform healthIconLayout;
     Animator animator;
     public bool IsDead = false;
-
+    public int MultiplicadorDeDaño = 1;
 
     void Start()
     {
@@ -74,9 +74,10 @@ public class PlayerHealth : MonoBehaviour
 
     public void Heal(int health)
     {
-        if (currentHealth != 0)
+        if (currentHealth > 0 && currentHealth < MaxHealth)
         {
-
+            currentHealth += health;
+            UpdateHealIcons();
         }
     }
 

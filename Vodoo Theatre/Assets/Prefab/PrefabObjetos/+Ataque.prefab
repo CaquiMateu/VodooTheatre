@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7602365642398143956}
   - component: {fileID: 3058551168876731833}
-  - component: {fileID: 5872728165990382167}
+  - component: {fileID: 3707165810647305225}
+  - component: {fileID: -1348702685590319258}
   m_Layer: 0
   m_Name: +Ataque
   m_TagString: ObjTienda
@@ -85,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5872728165990382167
+--- !u!114 &3707165810647305225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,7 +95,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1873380676954657862}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bca37e7d4acd69e418793d4dda03ac90, type: 3}
+  m_Script: {fileID: 11500000, guid: 1de0e1bef9b867540933756321e4aa65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnEnemigos: {fileID: 0}
@@ -107,13 +108,52 @@ MonoBehaviour:
       m_Calls: []
   "Acci\xF3n":
     m_PersistentCalls:
-      m_Calls: []
-  EscritorDeLaCharla: {fileID: 0}
-  InteractableText: {fileID: 0}
-  "N\xFAmeroDeD\xEDa": {fileID: 0}
-  PararDeHablar:
-    m_PersistentCalls:
-      m_Calls: []
-  TiposCharla: []
-  EnZona: 0
-  hablando: 0
+      m_Calls:
+      - m_Target: {fileID: 3707165810647305225}
+        m_TargetAssemblyTypeName: UseObj, Assembly-CSharp
+        m_MethodName: "AumentoDa\xF1oBase"
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  playerController: {fileID: 0}
+--- !u!70 &-1348702685590319258
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873380676954657862}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 2}
+  m_Direction: 0

@@ -7,11 +7,12 @@ public class FuegoController : MonoBehaviour
     SpriteRenderer spriteRenderer;
     [Range(0, 1)] public float t;
     public AnimationCurve curve;
+    PlayerHealth playerHealth;
     public int daño = 1;
     void Start()
     {
        spriteRenderer = GetComponent<SpriteRenderer>();
-       
+       playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
     }
 
    
@@ -31,7 +32,7 @@ public class FuegoController : MonoBehaviour
             PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                playerHealth.PerderVida(daño);
+                playerHealth.PerderVida(daño * playerHealth.MultiplicadorDeDaño);
             }
         }
     }
