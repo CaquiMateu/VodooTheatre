@@ -14,10 +14,13 @@ public class EnemyHeal : MonoBehaviour
     public PlayerController DañoAtaqueCargado;
     SpriteRenderer sprite;
     public JefeConejo jefeConejo;
+    public JefeTítere jefeTítere;
     public bool IsDead = false;
     Animator animator;
     SpriteRenderer spriteRenderer;
     Rigidbody2D rb;
+    public bool Esconejo = false;
+    public bool EsSombra = false;
 
     void Start()
     {
@@ -26,9 +29,25 @@ public class EnemyHeal : MonoBehaviour
         DañoAtaque = Player.GetComponent<PlayerController>();
         DañoAtaqueCargado = Player.GetComponent<PlayerController>();
         sprite = GetComponent<SpriteRenderer>();
-        jefeConejo = GetComponent<JefeConejo>();
+        if (Esconejo== true)
+        {
+            jefeConejo = GetComponent<JefeConejo>();
+            Esconejo = true;
+        }
+        else if (GameObject.FindGameObjectWithTag("Títere"))
+        {
+           jefeTítere = GetComponent<JefeTítere>();
+        }
+
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+    }
+    private void Update()
+    {
+        if (EsSombra == true)
+        {
+            jefeConejo.spriteRenderer.color = Color.black;
+        }
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -115,14 +134,28 @@ public class EnemyHeal : MonoBehaviour
         {
             if (VidaEnemigo <= 0)
             {
-               
-                IsDead = true;
-                jefeConejo.animator.SetBool("Muerte", true);
-                yield return new WaitForSeconds(0.1f);
-                jefeConejo.animator.SetBool("Muerte", false);
-                Time.timeScale = 0.3f;
-                yield return new WaitForSeconds(0.5f);
-                Time.timeScale = 1;
+               if (Esconejo == true)
+               {
+                    
+                    IsDead = true;
+                    jefeConejo.animator.SetBool("Muerte", true);
+                    yield return new WaitForSeconds(0.1f);
+                    jefeConejo.animator.SetBool("Muerte", false);
+                    Time.timeScale = 0.3f;
+                    yield return new WaitForSeconds(0.5f);
+                    jefeConejo.gameObject.layer = LayerMask.NameToLayer("Invunerable");
+                    Time.timeScale = 1;
+               }
+               else
+               {
+                    IsDead = true;
+                    jefeTítere.animator.SetBool("Muerte", true);
+                    yield return new WaitForSeconds(0.1f);
+                    jefeTítere.animator.SetBool("Muerte", false);
+                    Time.timeScale = 0.3f;
+                    yield return new WaitForSeconds(0.5f);
+                    Time.timeScale = 1;
+               }
                
                 
                 yield return new WaitForSeconds(7);

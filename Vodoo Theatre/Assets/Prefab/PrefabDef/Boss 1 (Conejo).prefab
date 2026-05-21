@@ -163,12 +163,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f6a9132ebfb63418f3fcb26727681b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VidaEnemigo: 40
+  VidaEnemigo: 80
   Golpeado: 0
   boss: 1
   "ProjectilDa\xF1o": {fileID: -7656072905679353696, guid: ea234428e01a90343bc08bbe530b8191, type: 3}
   "Da\xF1oAtaque": {fileID: 0}
   "Da\xF1oAtaqueCargado": {fileID: 0}
+  jefeConejo: {fileID: 0}
+  "jefeT\xEDtere": {fileID: 0}
+  IsDead: 0
+  Esconejo: 1
 --- !u!114 &238736312032758225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,6 +198,7 @@ MonoBehaviour:
   Huyendo: 0
   "Posici\xF3nCaida": {x: 0, y: 0}
   ZanahoriaProjectile: {fileID: 7457870755163713579, guid: 2541339830813984c969b02de621768b, type: 3}
+  animator: {fileID: 0}
 --- !u!95 &-8132664997819733237
 Animator:
   serializedVersion: 5

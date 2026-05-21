@@ -6,13 +6,14 @@ using UnityEngine;
 
 public class SpawnEnemigos : MonoBehaviour
 {
-    public GameManger GameManger;
+    public GameManger gameManger;
     [Header("Zonas")]
     public GameObject[] ZonasDeSpawn;
 
     [Header("Tipos De Enemigos")]
     public GameObject[] Enemigos;
     public JefeConejo ConejoBoss;
+    public JefeTítere jefeTítere;
 
     [Header("Valores Del Spawn")]
     public float TiempoEntreSpawn;
@@ -37,13 +38,14 @@ public class SpawnEnemigos : MonoBehaviour
     {
         NumeroDeHorda = 1;
         NumSpawnDificultad();
+        gameManger = GetComponent<GameManger>();
     }
     void Update()
     {
       
 
         EnemigosEnPantalla = GameObject.FindGameObjectsWithTag("Enemigo").Length;
-        if (EnemigosEnPantalla == 0 && HordaAcabada == false)
+        if (EnemigosEnPantalla == 0 && HordaAcabada == false && GameObject.FindGameObjectWithTag("Títere") == false)
         {
             DecisiónNumAleatorio();
         }
@@ -53,9 +55,11 @@ public class SpawnEnemigos : MonoBehaviour
             NumeroDeHorda++;
             CantidadDeEnemigosSpawneados = 0;
             NumAleatorioEnemigosOleada = 0;
-            GameManger.CambioDeEscenarioANoche();
+            gameManger.CambioDeEscenarioANoche();
 
         }
+
+        
 
         if (BossFight==true && GameObject.FindGameObjectsWithTag("Enemigo").Length== 0)
         {
@@ -69,7 +73,7 @@ public class SpawnEnemigos : MonoBehaviour
 
     public void NumSpawnDificultad()
     {
-        if (NumeroDeHorda == 3)
+        if (NumeroDeHorda == 3 || NumeroDeHorda == 6)
         {
             BossFight = true;
         }
@@ -92,7 +96,17 @@ public class SpawnEnemigos : MonoBehaviour
         else if (BossFight == true)
         {
             CantidadDeEnemigosPorHorda = 0;
-            Instantiate(ConejoBoss.gameObject, new Vector2(10.7f, 18.1f), Quaternion.identity);
+            if (NumeroDeHorda == 3)
+            {
+                Instantiate(ConejoBoss.gameObject, new Vector2(10.7f, 18.1f), Quaternion.identity);
+            }
+            if (NumeroDeHorda == 6)
+            {
+                gameManger.CambioEscenarioBoss();
+                Instantiate(jefeTítere.gameObject, new Vector3(3.29f, 2.89f), Quaternion.identity);
+            }
+           
+           
 
         }
        

@@ -27,6 +27,8 @@ public class JefeConejo : MonoBehaviour
     public GameObject ZanahoriaProjectile;
     float CarrotSpeed = 5;
     public Animator animator;
+    public Collider2D collider2;
+    public SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
@@ -40,6 +42,8 @@ public class JefeConejo : MonoBehaviour
         GravedadBase = rb.gravityScale;
         TamañoBase = this.gameObject.transform.localScale;
         enemyHeal = GetComponent<EnemyHeal>();
+        collider2 = GetComponent<Collider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     void Start()
     {
@@ -168,7 +172,7 @@ public class JefeConejo : MonoBehaviour
     IEnumerator Cooldown()
     {
         Debug.Log("Cooldown");
-        int tiempo = Random.Range(3,6);
+        float tiempo = Random.Range(1.5f,3.1f);
         yield return new WaitForSeconds(tiempo);
         Accionando = false;
     }

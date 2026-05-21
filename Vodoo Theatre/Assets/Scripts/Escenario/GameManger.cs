@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.Rendering.Universal;
 
 public class GameManger : MonoBehaviour
 {
@@ -11,10 +12,11 @@ public class GameManger : MonoBehaviour
    public SpawnEnemigos SpawnEnemigos;
    public CinemachineConfiner2D CinemachineConfiner2D;
    public Foco Foco;
-    public GameObject DecoraciónCorazones;
+   public GameObject DecoraciónCorazones;
    public Collider2D CámaraDía;
    public Collider2D CámaraNoche;
-    public PlayerHealth playerHealth;
+   public PlayerHealth playerHealth;
+    public Light2D GlobalLight;
     private void Start()
     {
         CambioDecámara(CámaraDía);
@@ -32,6 +34,7 @@ public class GameManger : MonoBehaviour
             DecoraciónCorazones.transform.localScale = new Vector3(2.31f, 2.31f, 0);
 
         }
+       
     }
     public void CambioDecámara(Collider2D NewCofinder)
     {
@@ -62,5 +65,12 @@ public class GameManger : MonoBehaviour
         TiendaManager.DesactivarTienda();
         SpawnEnemigos.NumSpawnDificultad();
         SpawnEnemigos.HordaAcabada = false;
+    }
+
+    public void CambioEscenarioBoss()
+    {
+        Color color = Color.white;
+        ColorUtility.TryParseHtmlString("#521818", out color);
+        GlobalLight.color = color;
     }
 }

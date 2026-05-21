@@ -181,7 +181,7 @@ MonoBehaviour:
   lifeTime: 3
   SpawnSound: {fileID: -4705660625309929031}
   "Da\xF1oBala": 2
-  Cooldown: 0.5
+  Cooldown: 1.5
   SpriteRenderer: {fileID: 6622978421950204638}
   Collider: {fileID: 497498050212913263}
 --- !u!82 &-4705660625309929031

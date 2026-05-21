@@ -12,6 +12,8 @@ TagManager:
   - Hablar
   - Fuego
   - ObjTienda
+  - "T\xEDtere"
+  - Punto
   layers:
   - Default
   - TransparentFX
@@ -26,7 +28,7 @@ TagManager:
   - "L\xEDmiteJugador"
   - Player
   - Invunerable
-  - 
+  - "BossT\xEDtere"
   - 
   - 
   - 
