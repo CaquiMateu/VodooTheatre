@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpawnEnemigos : MonoBehaviour
 {
@@ -42,7 +43,10 @@ public class SpawnEnemigos : MonoBehaviour
     }
     void Update()
     {
-      
+        if (NumeroDeHorda == 7)
+        {
+            SceneManager.LoadScene(0);
+        }
 
         EnemigosEnPantalla = GameObject.FindGameObjectsWithTag("Enemigo").Length;
         if (EnemigosEnPantalla == 0 && HordaAcabada == false && GameObject.FindGameObjectWithTag("Títere") == false)

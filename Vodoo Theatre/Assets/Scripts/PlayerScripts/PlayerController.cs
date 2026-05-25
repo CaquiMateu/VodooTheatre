@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     public float Aceleración = 10; 
     public bool moving = false;
     public float FuerzaDash = 10f;
-    bool Dashing;
+    public bool Dashing;
     public float TiempoDash = 1.5f;
     float CooldownDash = 0.3f;
     bool DashOnCooldown = false;
@@ -295,6 +295,7 @@ public class PlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
+        Debug.Log("sI");
         if (playerHealth.IsDead == true)
         {
             return;
@@ -306,6 +307,7 @@ public class PlayerController : MonoBehaviour
             float MaxSpeed = input * Movespeed;
             float SpeedToApply = MaxSpeed - rb.velocity.x;
             rb.AddForce(new Vector2(SpeedToApply * Aceleración, 0));
+            
             
         }
         else if (Dashing == false)

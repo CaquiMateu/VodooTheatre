@@ -43,8 +43,12 @@ public class UseObj : MonoBehaviour
     }
     public void AumentoVidaMax()
     {
-        playerHealth.MaxHealth += 1;
-        playerHealth.Heal(1);
+        if(playerHealth.MaxHealth <= 5)
+        {
+            playerHealth.MaxHealth += 1;
+            playerHealth.Heal(1);
+        }
+       
     }
     public void AumentoDañoBase()
     {
